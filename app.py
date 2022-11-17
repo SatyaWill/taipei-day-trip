@@ -1,9 +1,106 @@
 from flask import *
+import os, mysql.connector.pooling as pooling, re
+from data import app_pw
+
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
+app.config['JSON_SORT_KEYS'] = False
+app.secret_key = os.urandom(20)
+pool = pooling.MySQLConnectionPool(
+    pool_name = "mypool",
+    pool_size = 5,
+    pool_reset_session = True,
+    host = '127.0.0.1',
+    database = 'tp_att',
+    user='root',
+    password = app_pw.pw()
+    )
+  
+def selectone(sql, val=''): # 讀取SQL一筆資料
+    try:
+        mydb = pool.get_connection()
+        cursor = mydb.cursor(dictionary=True)
+        cursor.execute(sql, val)
+        return cursor.fetchone()
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        mydb.close()
 
-# Pages
+def selectall(sql, val=''): # 讀取SQL多筆資料
+    try:
+        mydb = pool.get_connection()
+        cursor = mydb.cursor(dictionary=True)
+        cursor.execute(sql, val)
+        return cursor.fetchall()
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        mydb.close()
+
+
+@app.route("/api/attractions")
+def att_page():
+    page = request.args.get('page')
+    keyword = request.args.get('keyword')
+    try:
+        page = int(page)
+        if keyword:
+            sql = 'SELECT COUNT(*) n FROM attractions WHERE category=%s or INSTR(name, %s)'
+            pages = selectone(sql, (keyword, keyword))['n']/12
+            sql2 = 'SELECT attractions.*, images FROM attractions left join imgs on \
+            attractions.id=imgs.att_id WHERE category=%s OR INSTR(name, %s) ORDER BY id LIMIT %s,12'
+            res = selectall(sql2, (keyword, keyword ,page*12))
+            for i in res:
+                i['images'] = re.findall(r'http.*?[j|p][p|n]g',i['images'])
+            if pages > page+1:          
+                return {"nextPage":page+1,"data":res}, 200
+            else:
+                return {"nextPage":None,"data":res}, 200
+        else:
+            sql = 'SELECT COUNT(*) n FROM attractions'
+            pages = selectone(sql)['n']/12
+            sql2 = 'SELECT attractions.*, images FROM attractions left join imgs on \
+                attractions.id=imgs.att_id ORDER BY id LIMIT %s,12'
+            res = selectall(sql2, (page*12,))
+            for i in res:
+                i['images'] = re.findall(r'http.*?[j|p][p|n]g',i['images'])
+            if pages > page+1:          
+                return {"nextPage":page+1,"data":res}, 200
+            else:
+                return {"nextPage":None,"data":res}, 200
+    except Exception as e:
+        print(e)
+        return jsonify(error=True, message="伺服器內部錯誤"), 500
+
+@app.route("/api/attraction/<int:attractionId>")
+def att(attractionId):
+    try:
+        sql = 'SELECT attractions.*, images FROM attractions left join imgs on \
+        attractions.id=imgs.att_id WHERE id=%s'
+        res = selectone(sql, (attractionId,))
+        if res:
+            res['images'] = re.findall(r'http.*?[j|p][p|n]g',res['images'])  
+            return {"data":res}, 200
+        else:
+            return jsonify(error=True, message="景點編號不正確"), 400
+    except Exception as e:
+        print(e)
+        return jsonify(error=True, message="伺服器內部錯誤"), 500
+    
+@app.route("/api/categories")
+def categories():
+    try:
+        sql = 'SELECT DISTINCT category FROM attractions ORDER BY category DESC'
+        res = [item['category'] for item in selectall(sql)]
+        return {"data":res}, 200
+    except Exception as e:
+        print(e)
+        return jsonify(error=True, message="伺服器內部錯誤"), 500
+
 @app.route("/")
 def index():
 	return render_template("index.html")
