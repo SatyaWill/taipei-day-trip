@@ -1,0 +1,258 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    margin: 0px;
+    font-size: 16px;
+    text-align:center;
+    padding-top: 54px;
+    font-family: 'Noto Sans TC';
+}
+
+nav{
+    position: fixed;
+    background-color: white;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin: -54px 0px;
+    width: 100%;
+    height: 54px;
+    z-index: 3;
+    border: 0;
+}
+
+.frame{
+    display: flex;
+    align-items: center;
+    width: 1200px;
+    height: 34px;
+}
+
+.left {
+    position: relative;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 34px;
+    color: #448899;
+}
+
+.right {
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    flex: auto;
+}
+
+.item {
+    font-size: 16px;
+    font-weight: 500;
+    color: #666666;
+    margin-left:20px;
+}
+
+.welcome {
+    background:url(welcome.png) no-repeat;
+    background-size: cover;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 55px;
+}
+
+.slogan{
+    width: 1200px;
+    height: 169px;
+}
+
+.slogan span, .slogan h1, .slogan h4{
+    text-align: left;
+    display: flex;
+    align-items: center;
+    color: #F8F8F8;
+}
+
+.slogan h1{
+    height: 41px;
+    text-shadow: 0px 0px 30px #AABBCC;
+}
+
+.slogan h4{
+    height: 22px;
+    margin: 15px auto 25px;
+}
+
+.searchbox{
+    position: relative;
+}
+
+.searchbox input{
+    height: 46px;
+}
+
+.searchbox input, #search_dialog{
+    border-radius: 5px;
+    justify-content: left;
+}
+
+#search, #search_dialog{
+    width: 400px;
+    background: #FFFFFF;
+    border:1px solid #E8E8E8;
+    filter: drop-shadow(0px 0px 20px #AABBCC);
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+    color: #757575;
+}
+
+#search_dialog{
+    padding: 0px;
+    height: auto;
+    display: flex,
+    position: fixed;
+    top: 51px;
+}
+
+#search_dialog button{
+    padding: 10px 15px;
+    width: 120px;
+    height: 40px;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+    color: #000000;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#search_dialog button:hover{
+    background: #E8E8E8;
+}
+
+input, #search_dialog button:focus{
+    outline: none;
+}
+
+#search_icon{
+    width: 60px;
+    background: url(ico_search.png) center center no-repeat;
+    background-size: 30px 30px;
+    background-color:#448899;
+    border: 0px;
+}
+
+#main {
+    width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto auto 55px;
+    justify-content: flex-start;
+}
+
+.picbox {
+    margin: 1.25%;
+    flex: none;
+    display: flex;
+    width: 22.5%;
+    text-align: center;
+    height: 242px;
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.picbox p{
+    bottom: 0px;
+    line-height: 45px;
+    font-weight: 500;
+    position: absolute;
+    color: #757575;
+}
+
+.picbox p:first-of-type{
+    float: left;
+    left: 10px;
+}
+.picbox p:nth-of-type(2){
+    float: right;
+    right: 10px;
+}
+
+.pic {
+    width: 100%;
+    height: 197px;
+    object-fit: cover;
+    vertical-align: middle;
+    border-radius: 5px 5px 0px 0px;
+    position: absolute;
+    left: 0px;
+}
+
+.title{
+    position: absolute;
+    left: 0px;
+    top: 157px;
+    width: 100%;
+    height: 40px;
+    background: rgba(0,0,0,0.6);
+    z-index: 0;
+}
+
+.title p{
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    color: #FFFFFF;
+    position: absolute;
+    left: 10px;
+    float: left;
+}
+  
+footer{
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    height: 104px;
+    background: #757575;
+}
+
+footer p{
+    font-weight: bold;
+    position: relative;
+    top: 44px;
+    color: #FFFFFF;
+}
+
+@media (max-width:1200px) {
+    .slogan{
+        margin: 20px;
+    }
+
+    #main {
+        width: 95%;
+    }
+
+    .picbox {
+        margin: 1.75%;
+        width: 46.5%;
+    }
+}
+
+@media(max-width:640px) {
+    .search{
+        width: 230px;
+    }
+
+    .picbox {
+        margin: 5%;
+        width: 90%;
+    }
+
+}
