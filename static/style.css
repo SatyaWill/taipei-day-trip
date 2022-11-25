@@ -109,7 +109,6 @@ nav{
 #search_dialog{
     padding: 0px;
     height: auto;
-    display: flex;
     top: 51px;
     z-index: 10;
 }
