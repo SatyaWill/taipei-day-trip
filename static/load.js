@@ -5,12 +5,16 @@ function load(details){
         let picbox = document.createElement('div');
         let img = document.createElement('img');
         let name = document.createElement('div');
+        let mrt;
+        if(item.mrt){
+          mrt = item.mrt
+        }else{mrt = "無"};
         picbox.className = "picbox";
         name.className = "title";
         img.className = "pic";
         img.src = item.images[0];
         name.innerHTML= "<p>"+item.name+"</p>";
-        picbox.innerHTML = "<p>"+item.mrt+"</p><p>"+item.category+"</p>";
+        picbox.innerHTML = "<p>"+mrt+"</p><p>"+item.category+"</p>";
         picbox.appendChild(img);
         picbox.appendChild(name);
         main.appendChild(picbox);
@@ -34,9 +38,13 @@ function loadpage(keyword_str=""){  // 載入頁面的fx
                     return res.json();
                     }).then(function(data){
                         details = data.data;
-                        load(details);
+                        if(details.length != 0){
+                            load(details);
+                            page = data.nextPage;
+                        }else{
+                            main.innerHTML = "查無資料"
+                        };
                         observer.unobserve(target);
-                        page = data.nextPage;
                     })
                     .then(() => {
                         if(page) {
