@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>台北一日遊</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+    <nav>
+        <div class="frame">
+            <div class="left">台北一日遊</div>
+            <div class="right">
+                <div class="item">預定行程</div>
+                <div class="item">登入/註冊</div>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="welcome">
+            <div class="slogan">
+                <h1>輕鬆享受台北一日悠閒</h1>
+                <h4>探索每個角落，體驗城市的深度旅遊行程</h4>
+                <span class="searchbox">
+                    <input type="search" id="search" name="keyword" placeholder="輸入景點名稱查詢" autofocus>
+                    <input type="button" id="search_icon" onclick="search_att()">
+                    <dialog id="search_dialog">
+                        <form method="dialog" id="search_form">
+                        </form>
+                    </dialog>
+                </span>
+            </div>
+        </div>
+        <div id="main"></div>
+    </main>
+    <footer>
+        <p>COPYRIGHT © 2021 台北一日遊</p>
+    </footer>
+    <script src="load.js"></script>
+</body>
+</html>

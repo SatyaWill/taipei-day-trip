@@ -1,12 +1,12 @@
 from flask import *
 import os, mysql.connector.pooling as pooling, re
 from data import app_pw
+from model.fetch import *
 
-app=Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path="/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config['JSON_SORT_KEYS'] = False
-app.secret_key = os.urandom(20)
 pool = pooling.MySQLConnectionPool(
     pool_name = "mypool",
     pool_size = 5,
@@ -17,31 +17,6 @@ pool = pooling.MySQLConnectionPool(
     password = app_pw.pw()
     )
   
-def selectone(sql, val=''): # 讀取SQL一筆資料
-    try:
-        mydb = pool.get_connection()
-        cursor = mydb.cursor(dictionary=True)
-        cursor.execute(sql, val)
-        return cursor.fetchone()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        mydb.close()
-
-def selectall(sql, val=''): # 讀取SQL多筆資料
-    try:
-        mydb = pool.get_connection()
-        cursor = mydb.cursor(dictionary=True)
-        cursor.execute(sql, val)
-        return cursor.fetchall()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        mydb.close()
-
-
 @app.route("/api/attractions")
 def att_page():
     page = request.args.get('page')
@@ -49,27 +24,19 @@ def att_page():
     try:
         page = int(page)
         if keyword:
-            sql = 'SELECT COUNT(*) n FROM attractions WHERE category=%s or INSTR(name, %s)'
-            pages = selectone(sql, (keyword, keyword))['n']/12
-            sql2 = 'SELECT attractions.*, images FROM attractions left join imgs on \
-            attractions.id=imgs.att_id WHERE category=%s OR INSTR(name, %s) ORDER BY id LIMIT %s,12'
-            res = selectall(sql2, (keyword, keyword ,page*12))
-            for i in res:
-                i['images'] = re.findall(r'http.*?[j|p][p|n]g',i['images'])
-            if pages > page+1:          
-                return {"nextPage":page+1,"data":res}, 200
+            sql = 'SELECT attractions.*, images FROM attractions left join images on \
+            attractions.id=images.att_id WHERE category=%s OR INSTR(name, %s) ORDER BY id LIMIT %s,13'
+            res = selectall2(sql, (keyword, keyword ,page*12))
+            if len(res) > 12:
+                return {"nextPage":page+1,"data":res[0:12]}, 200
             else:
                 return {"nextPage":None,"data":res}, 200
         else:
-            sql = 'SELECT COUNT(*) n FROM attractions'
-            pages = selectone(sql)['n']/12
-            sql2 = 'SELECT attractions.*, images FROM attractions left join imgs on \
-                attractions.id=imgs.att_id ORDER BY id LIMIT %s,12'
-            res = selectall(sql2, (page*12,))
-            for i in res:
-                i['images'] = re.findall(r'http.*?[j|p][p|n]g',i['images'])
-            if pages > page+1:          
-                return {"nextPage":page+1,"data":res}, 200
+            sql = 'SELECT attractions.*, images FROM attractions left join images on \
+                attractions.id=images.att_id ORDER BY id LIMIT %s,13'
+            res = selectall2(sql, (page*12,))
+            if len(res) > 12:          
+                return {"nextPage":page+1,"data":res[0:12]}, 200
             else:
                 return {"nextPage":None,"data":res}, 200
     except Exception as e:
@@ -79,8 +46,8 @@ def att_page():
 @app.route("/api/attraction/<int:attractionId>")
 def att(attractionId):
     try:
-        sql = 'SELECT attractions.*, images FROM attractions left join imgs on \
-        attractions.id=imgs.att_id WHERE id=%s'
+        sql = 'SELECT attractions.*, images FROM attractions left join images on \
+        attractions.id=images.att_id WHERE id=%s'
         res = selectone(sql, (attractionId,))
         if res:
             res['images'] = re.findall(r'http.*?[j|p][p|n]g',res['images'])  
@@ -94,7 +61,7 @@ def att(attractionId):
 @app.route("/api/categories")
 def categories():
     try:
-        sql = 'SELECT DISTINCT category FROM attractions ORDER BY category DESC'
+        sql = 'SELECT category FROM category'
         res = [item['category'] for item in selectall(sql)]
         return {"data":res}, 200
     except Exception as e:
@@ -114,4 +81,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run(host='0.0.0.0',port=3000)
+app.run(host='0.0.0.0',port=3000,debug=True)
+
