@@ -71,7 +71,7 @@ def categories():
 @app.route("/")
 def index():
 	return render_template("index.html")
-@app.route("/attraction/<int:id>")
+@app.route("/attraction/<id>")
 def attraction(id):
     return render_template("attraction.html")
 @app.route("/booking")
