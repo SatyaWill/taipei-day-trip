@@ -73,6 +73,7 @@
 }
 
 #search_icon{
+    cursor: pointer;
     width: 60px;
     background: url(/static/pic/ico_search.png) center center no-repeat;
     background-size: 30px 30px;
@@ -89,6 +90,7 @@
 }
 
 .picbox {
+    cursor: pointer;
     margin: 1.25%;
     flex: none;
     display: flex;
