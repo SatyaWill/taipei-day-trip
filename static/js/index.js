@@ -18,6 +18,9 @@ function load(details){
         picbox.appendChild(img);
         picbox.appendChild(name);
         main.appendChild(picbox);
+        picbox.addEventListener('click', function() {
+            location.href = '/attraction/'+ item.id;
+        }, false);
     })
 };
 
@@ -66,6 +69,7 @@ function loadpage(keyword_str=""){  // 載入頁面的fx
 
 // 載入頁面
 loadpage();
+
 
 // 查詢景點功能
 let search = document.querySelector("#search");

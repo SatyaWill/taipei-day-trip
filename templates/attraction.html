@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>台北一日遊</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/attraction.css"/>
+</head>
+<body>
+    <div id="page-container">
+        <nav>
+            <div class="frame">
+                <div class="left">台北一日遊</div>
+                <div class="right">
+                    <div class="item">預定行程</div>
+                    <div class="item">登入/註冊</div>
+                </div>
+            </div>
+            <dialog id="signin_dialog" class="sign_dialog">
+                <p>登入會員帳號</p>
+                <form method="dialog" id="signin">
+                    <button class="close"></button>
+                    <input type="email" name="email" class="sign" placeholder="輸入電子信箱">
+                    <input type="password" name="password" class="sign" placeholder="輸入密碼">
+                    <button class="dialog_btn">登入帳戶</button>
+                </form>
+                <span id="to_signup">還沒有帳戶？點此註冊</span>
+            </dialog>
+            <dialog id="signup_dialog" class="sign_dialog">
+                <p>註冊會員帳號</p>
+                <form method="dialog" id="signup">
+                    <button class="close"></button>
+                    <input type="text" name="name" class="sign" placeholder="輸入姓名">
+                    <input type="email" name="email" class="sign" placeholder="輸入電子信箱">
+                    <input type="password" name="password" class="sign" placeholder="輸入密碼">
+                    <button class="dialog_btn">註冊新帳戶</button>
+                </form>
+                <span id="to_signin">已經有帳戶了？點此登入</span>
+            </dialog>
+        </nav>
+        <main>
+            <section class="att1">
+                <div class="fade" id="slide">
+                    <div class="slide_btn prev" onclick="slides(-1)"></div>
+                    <div class="slide_btn next" onclick="slides(1)"></div>
+                    <div class="dots"></div>
+                </div>
+                <div class="profile">
+                    <p class="att_name"></p>
+                    <p class="cat_mrt"></p>
+                    <form class="booking">
+                        <p class="title">訂購導覽行程</p>
+                        <p class="content">以此景點為中心的一日行程，帶您探索城市角落故事</p>
+                        <p class="title">選擇日期：<input type="date" id="date" name="date"></p>
+                        <p class="title time">選擇時間：
+                            <input type="radio" id="morning" name="time" value="morning">
+                            <label>上半天</label>
+                            <input type="radio" id="afternoon" name="time" value="afternoon">
+                            <label>下半天</label>
+                        </p>
+                        <p class="title">導覽費用：
+                            <span class="content">新台幣  元</span>
+                        </p>
+                        <button>開始預約行程</button>
+                    </form>
+                </div>
+            </section>
+            <hr/>
+            <section class="att2">
+                <p class="desc"></p>
+                <p class="desc_title">景點地址：</p>
+                <p class="address"></p>
+                <p class="desc_title">交通方式：</p>
+                <p class="transport"></p>
+            </section>
+        </main>
+    </div>
+        <footer>
+            <p>COPYRIGHT © 2021 台北一日遊</p>
+        </footer>
+        <script src="/static/js/sign.js"></script>
+        <script src="/static/js/attraction.js"></script>
+</body>
+</html>

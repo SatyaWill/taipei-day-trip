@@ -1,0 +1,149 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    margin: 0px;
+    font-size: 16px;
+    text-align:center;
+    padding-top: 54px;
+    font-family: 'Noto Sans TC';
+    background: #757575;
+}
+
+button, input{
+    border: none;
+    background-color: white;
+}
+
+input, button:focus{
+    outline: none;
+}
+
+#page-container{
+    background-color: #FFFFFF;
+    margin: 0px;
+    top: 54px;
+}
+
+nav{
+    position: fixed;
+    background-color: white;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    top: 0px;
+    width: 100%;
+    height: 54px;
+    z-index: 3;
+    border: 0;
+}
+
+.frame{
+    display: flex;
+    align-items: center;
+    width: 1200px;
+    height: 34px;
+}
+
+.left {
+    position: relative;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    color: #448899;
+}
+
+.right {
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    flex: auto;
+}
+
+.item {
+    cursor: pointer; 
+    font-size: 16px;
+    font-weight: 500;
+    color: #666666;
+    margin-left:20px;
+}
+
+.sign_dialog{
+    box-sizing: border-box;
+    width: 340px;
+    margin: auto;
+    top: 80px;
+    box-shadow: 0px 4px 60px #AAAAAA;
+    border:none;
+    border-top: 10px solid;
+    border-image: linear-gradient(270deg, #337788 0%, #66AABB 100%) 1;
+    clip-path: inset(0 round 10px);
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.sign_dialog P{
+    height: 27px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+
+.close{
+    cursor: pointer; 
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 17px;
+    top: 17px;
+    background: url(/static/pic//ico_close.png);
+    background-size: cover;
+}
+
+.sign_dialog input, .dialog_btn{
+    box-sizing: border-box;
+    width: 310px;
+    height: 47px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.sign{
+    font-weight: 500;
+    font-size: 16px;
+    color: #757575;
+}
+
+.dialog_btn{
+    background: #448899;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.sign_dialog span{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 13px;
+    color: #666666;
+}
+ 
+footer{
+    height: 104px;
+    width: 100%;
+    background: #757575;
+}
+
+footer p{
+    font-weight: bold;
+    position: relative;
+    line-height: 13px;
+    top: 45px;
+    color: #FFFFFF;
+}
