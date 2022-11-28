@@ -1,0 +1,256 @@
+.att1{
+    width: 1200px;
+    padding-top: 40px;
+    margin: 0px auto 40px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#slide{
+    position: relative;
+    display: flex;
+    width: 45%;
+    height: 400px;
+    margin-left: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.slide_pic{   
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    left: 0px;
+    z-index: 0;
+}
+
+.slide_btn{
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 182px;
+    opacity: 0.75;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.prev{
+    background: url("/static/pic/ico_prev.png");
+    background-size: cover;
+    left: 10px;
+}
+
+.next{
+    background: url("/static/pic/ico_next.png");
+    background-size: cover;
+    right: 10px;
+}
+
+.dots{
+    position: absolute;
+    bottom: 12px;
+    text-align:center;
+    z-index: 1;
+}
+
+.dot{
+    cursor: pointer; 
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    flex: none;
+    background: #FFFFFF;
+    transition: background-color 0.6s ease;
+    margin-right: 12px;
+    z-index: 3;
+}
+
+.active,
+.dot:hover{
+    background-color: #000000;
+    border: 1px solid #FFFFFF;
+}
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+.profile{
+    width: 50%;
+    height: 100%;
+    margin-left: 2.5%;
+}
+
+.profile p{
+    width: 100%;
+    text-align: left;
+    color: #666666;
+}
+
+.att_name{
+    height: 33px;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.cat_mrt{
+    height: 22px;
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.booking{
+    box-sizing: border-box;
+    width: 100%;
+    height: 302px;
+    padding: 15px 20px;
+    background: #E8E8E8;
+    border-radius: 5px;
+    position: relative;
+}
+
+.title{
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #666666;
+}
+
+.content{
+    font-weight: 500;
+    font-size: 16px;
+    color: #666666;
+}
+
+.time{
+    display: flex;
+    align-items: center;
+}
+
+.booking label{
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+#date{
+    box-sizing: border-box;
+    width: 193px;
+    height: 35px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+    padding: 5px 10px;
+    margin-top: 15px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    background: url("/static/pic/ico_calendar.png") no-repeat;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    position: relative;
+}
+
+input[type="radio"]::before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+}
+ 
+input[type="radio"]:checked::after {
+    content: '';
+    background-color: #448899;
+    width: 18px;
+    height: 18px;
+    border: 2px double #fff;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+input[type="radio"]:nth-of-type(2){
+    margin-left: 18pt;
+}
+
+#reserve{
+    box-sizing: border-box;
+    cursor: pointer;
+    position: absolute;
+    left: 15px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    width: 154px;
+    height: 36px;
+    background: #448899;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+hr{
+    width: 1200px;
+    border: 1px solid #E8E8E8;
+    margin: 0px auto;
+}
+
+.att2{
+    width: 1200px;
+    margin: 40px auto 0px;
+    padding-bottom: 120px;
+    text-align: justify;
+    font-size: 16px;
+    color: #666666;
+}
+
+.desc, .address, .transport{
+    font-weight: 400;
+    line-height: 23px;
+    margin: auto 15px;
+}
+
+.desc_title{
+    font-weight: 700;
+    margin: 20px 15px auto;
+    height: 32px;
+}
+
+@media (max-width:1200px) {
+    .att1, .att2, hr{
+        width: 95%;
+    }
+}
+@media(max-width:700px) {
+    .att1{
+        padding-top: 0px;
+    }
+    #slide{
+        width: 100%;
+        margin-left: auto;
+    }
+    .profile{
+        left: 2.5%;
+        width: 95%;
+    }
+    #search_dialog{
+        width: 322px;
+    }
+}
