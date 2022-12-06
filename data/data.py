@@ -1,4 +1,5 @@
 import json, re, app_pw, mysql.connector
+import sys
 
 conn =  mysql.connector.connect(
     host = '127.0.0.1',
@@ -15,7 +16,6 @@ def add(sql, val=''): # 編輯SQL資料
         conn.commit()
     except Exception as e:
         print(e)
-
 
 
 add("DROP TABLE IF EXISTS category")

@@ -123,7 +123,7 @@
     color: #666666;
 }
 
-.content{
+.content, #price{
     font-weight: 500;
     font-size: 16px;
     color: #666666;
@@ -188,6 +188,10 @@ input[type="radio"]:nth-of-type(2){
     margin-left: 18pt;
 }
 
+#price{
+    background: none;
+    width: 35px;
+}
 #reserve{
     box-sizing: border-box;
     cursor: pointer;
@@ -233,6 +237,14 @@ hr{
     height: 32px;
 }
 
+iframe{
+    left: 15px;
+    width: 400px;
+    height: 300px;
+    border: none;
+    margin: auto 15px;
+}
+
 @media (max-width:1200px) {
     .att1, .att2, hr{
         width: 95%;
@@ -252,5 +264,12 @@ hr{
     }
     #search_dialog{
         width: 322px;
+    }
+}
+
+@media(max-width:500px){
+    iframe{
+        width: 90%;
+        height: 250px;
     }
 }

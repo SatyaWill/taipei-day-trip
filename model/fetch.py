@@ -1,6 +1,9 @@
-import mysql.connector.pooling as pooling, re
+import mysql.connector.pooling as pooling
+import re, os, sys
+sys.path.append("..")
 from data import app_pw
 
+secret_key = os.urandom(20)
 pool = pooling.MySQLConnectionPool(
     pool_name = "mypool",
     pool_size = 5,
@@ -34,6 +37,7 @@ def selectall(sql, val=''): # 讀取SQL全部資料
     finally:
         cursor.close()
         mydb.close()
+        
 def selectall2(sql, val=''): # 讀取SQL全部資料(修改images格式)
     try:
         mydb = pool.get_connection()
@@ -55,6 +59,21 @@ def selectall2(sql, val=''): # 讀取SQL全部資料(修改images格式)
             })
         return res
     except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        mydb.close()
+
+def edit_db(sql, val=''): # 編輯SQL資料
+    try:
+        mydb = pool.get_connection() # 連到pooeditdbl
+        cursor = mydb.cursor(dictionary=True)
+        cursor.execute(sql, val)
+        mydb.commit()
+        print("異動筆數", mydb.cursor().rowcount)
+    except Exception as e:
+        if "mydb" in dir():
+            mydb.rollback()
         print(e)
     finally:
         cursor.close()

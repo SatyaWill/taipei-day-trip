@@ -1,10 +1,16 @@
-let details; // 製作需載入的element
-let main = document.getElementById('main');
+/*目錄：
+製作需載入element fx
+載入頁面
+查詢景點功能（景點分類、景點分類dialog）*/
+
+// 製作需載入element fx
+let details; 
+const main = document.getElementById('main');
 function load(details){
     details.forEach(item =>{
-        let picbox = document.createElement('div');
-        let img = document.createElement('img');
-        let name = document.createElement('div');
+        const picbox = document.createElement('div');
+        const img = document.createElement('img');
+        const name = document.createElement('div');
         let mrt;
         if(item.mrt){
           mrt = item.mrt
@@ -24,7 +30,8 @@ function load(details){
     })
 };
 
-function loadpage(keyword_str=""){  // 載入頁面的fx
+// 載入頁面 ====================================================
+function loadpage(keyword_str=""){
     let page = 0;
     let options = {
         root: null,
@@ -32,7 +39,7 @@ function loadpage(keyword_str=""){  // 載入頁面的fx
         threshold: [0, 0.95]
     };
     const observer = new IntersectionObserver(callback, options);
-    let target = document.querySelector('footer');
+    const target = document.querySelector('footer');
     observer.observe(target);
     function callback(entries, observer){
         entries.forEach((entry) => {
@@ -66,16 +73,14 @@ function loadpage(keyword_str=""){  // 載入頁面的fx
         }
     )};
 };
-
-// 載入頁面
 loadpage();
 
 
-// 查詢景點功能
-let search = document.querySelector("#search");
-let search_dialog = document.querySelector("#search_dialog");
-let search_form = document.querySelector("#search_form");
-let search_item = document.querySelectorAll(".search_item");
+// 查詢景點功能 ====================================================
+const search = document.querySelector("#search");
+const search_dialog = document.querySelector("#search_dialog");
+const search_form = document.querySelector("#search_form");
+const search_item = document.querySelectorAll(".search_item");
 // 景點分類
 fetch('/api/categories').then((res) => { 
     return res.json();

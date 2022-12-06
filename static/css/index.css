@@ -33,7 +33,7 @@
     position: relative;
 }
 
-.searchbox input{
+#search, #search_icon{
     height: 46px;
     border-radius: 5px;
 }
@@ -58,6 +58,7 @@
 }
 
 #search_dialog button{
+    cursor: pointer;
     padding: 10px 15px;
     width: 120px;
     height: 40px;
@@ -70,6 +71,8 @@
 
 #search_dialog button:hover{
     background: #E8E8E8;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 #search_icon{

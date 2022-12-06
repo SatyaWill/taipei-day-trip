@@ -1,8 +1,17 @@
+/*目錄
+串接後端資料
+載入資料fx
+照片輪播控制
+日期預設當天、上/下午不同導覽費用
+預約行程
+*/
+
+const el_class = (name) => document.getElementsByClassName(name);
+const el_tag = (name) => document.getElementsByTagName(name);
+const el_qr = (name) => document.querySelector(name);
 // 串接後端資料
-let id = new URL(location.href).pathname.split("/")[2];
-fetch('/api/attraction/'+ id).then((res) => {
-    return res.json();
-    }).then(function(data){
+const id = new URL(location.href).pathname.split("/")[2];
+fetch('/api/attraction/'+ id).then(res=>res.json()).then(data=>{
         detail = data.data;
         load(detail);
     })
@@ -11,42 +20,36 @@ fetch('/api/attraction/'+ id).then((res) => {
 function load(detail){
     images = detail.images;
     images.forEach((item, index) => {
-        let slide = document.getElementById("slide");
-        let dotbox = document.getElementsByClassName("dots")[0];
-        let img = document.createElement('img');
+        const img = document.createElement('img');
+        const dot = document.createElement("span");
         img.className = "slide_pic";
         img.src = item;
         img.style.display = "none";
-        let dot = document.createElement("span");
         dot.className = "dot";
         dot.onclick = function(){
             let n = index+1;
             showSlides(slideIndex=n);
         };
-        slide.appendChild(img);
-        dotbox.appendChild(dot);
+        el("slide").appendChild(img);
+        el_class("dots")[0].appendChild(dot);
     });
-    let slide_pic = document.getElementsByClassName("slide_pic");
-    slide_pic[0].style.display = "block";
-    let att_name = document.getElementsByClassName("att_name")[0];
-    let cat_mrt = document.getElementsByClassName("cat_mrt")[0];
-    let desc = document.getElementsByClassName("desc")[0];
-    let address = document.getElementsByClassName("address")[0];
-    let transport = document.getElementsByClassName("transport")[0];
-    att_name.textContent = detail.name;
+    el_qr(".slide_pic").style.display = "block";
+    el_tag("title")[0].textContent = detail.name;
+    el_qr(".att_name").textContent = detail.name;
     let mrt
     if(detail.mrt){
         mrt = detail.mrt
       }else{mrt = "無"};
-    cat_mrt.textContent = detail.category+" at "+mrt;
-    desc.textContent = detail.description;
-    address.textContent = detail.address;
-    transport.textContent = detail.transport;
+    el_qr(".cat_mrt").textContent = detail.category+" at "+mrt;
+    el_qr(".desc").textContent = detail.description;
+    el_qr(".address").textContent = detail.address;
+    el_qr(".transport").textContent = detail.transport;
+    el_tag("iframe")[0].src="https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q="+detail.lat+","+detail.lng+"("+detail.name+")"+"&z=16&output=embed&t="
 };
 
 // 照片輪播控制
-let slide_pic = document.getElementsByClassName("slide_pic");
-let dot = document.getElementsByClassName("dot");
+const slide_pic = document.getElementsByClassName("slide_pic");
+const dot = document.getElementsByClassName("dot");
 let slideIndex = 1;
 function slides(n){ // 前後控制
     showSlides(slideIndex += n);
@@ -65,13 +68,11 @@ function showSlides(n){
     dot[slideIndex - 1].className += " active";
 }
 
-// 上/下午不同導覽費用
-let morning = document.getElementById("morning");
-let afternoon = document.getElementById("afternoon");
-let content =  document.getElementsByClassName("content")[1];
-morning.addEventListener("click", event=>{
- content.textContent = "新台幣 2000 元";
+// 日期預設當天、上/下午不同導覽費用
+el("date").valueAsDate = new Date();
+el("morning").addEventListener("click", event=>{
+    el("price").value = 2000;
 });
-afternoon.addEventListener("click", event=>{
-    content.textContent = "新台幣 2500 元";
+el("afternoon").addEventListener("click", event=>{
+    el("price").value = 2500;
 });
