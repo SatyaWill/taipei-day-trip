@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response, Response
+from flask import Blueprint, request, jsonify, make_response
 import sys, re
 sys.path.append("..") 
 from model.fetch import *

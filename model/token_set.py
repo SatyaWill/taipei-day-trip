@@ -1,5 +1,5 @@
 from flask import request, jsonify
-import os, jwt, sys, hashlib, time
+import jwt, sys, hashlib, time
 from jwt import exceptions
 from functools import wraps
 sys.path.append("..") 

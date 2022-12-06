@@ -1,5 +1,4 @@
 import json, re, app_pw, mysql.connector
-import sys
 
 conn =  mysql.connector.connect(
     host = '127.0.0.1',
