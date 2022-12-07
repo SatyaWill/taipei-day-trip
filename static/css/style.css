@@ -85,7 +85,7 @@ nav{
 .sign_dialog, #signin_out_ok{
     box-sizing: border-box;
     width: 340px;
-    margin: auto;
+    margin: 0 auto auto;
     top: 80px;
     box-shadow: 0px 4px 60px #AAAAAA;
     border:none;

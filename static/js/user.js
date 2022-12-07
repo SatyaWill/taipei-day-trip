@@ -7,6 +7,9 @@
 登出 登入訊息 dialog */
 
 const el = (name) => document.getElementById(name);
+const el_tag = (name) => document.getElementsByTagName(name);
+const el_class = (name) => document.getElementsByClassName(name);
+const el_qr = (name) => document.querySelector(name);
 // 取得登入狀態 ================================================
 function get_user_info(){
     fetch("/api/user/auth").then(res=>res.json()).then(data=>{
@@ -25,16 +28,16 @@ function dialog_control(){
     const signin_close = document.getElementsByClassName("close")[0]
     const signup_close = document.getElementsByClassName("close")[1]
     el("nav_signin_up").addEventListener("click", function(){
-        el("signin_dialog").show();
+        el("signin_dialog").showModal();
     });
 
     el("to_signup").addEventListener("click", function(){
         el("signin_dialog").close();
-        el("signup_dialog").show();
+        el("signup_dialog").showModal();
     });
     el("to_signin").addEventListener("click", function(){
         el("signup_dialog").close();
-        el("signin_dialog").show();
+        el("signin_dialog").showModal();
     });
     signin_close.addEventListener("click", function(){
         el("signin_dialog").close();
@@ -123,9 +126,9 @@ function signout(){
 // 登出/入訊息 dialog ================================================
 async function signin_out_dialog(msg){
     el("signin_out_ok").innerHTML= msg;
-    await el("signin_out_ok").show();
+    await el("signin_out_ok").showModal();
     setTimeout(() => {
         location.reload()
-    }, 500);
+    }, 600);
 }
 

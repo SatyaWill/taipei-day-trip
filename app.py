@@ -1,14 +1,14 @@
 from flask import Flask, render_template
 from api.attraction import attraction
 from api.user import user
+from setting import setting
 
 app = Flask(__name__)
+app.config.from_object(setting)
+app.jinja_env.auto_reload = True
 app.register_blueprint(attraction)
-app.register_blueprint(user)
-app.config["JSON_AS_ASCII"]=False
-app.config["TEMPLATES_AUTO_RELOAD"]=True
-app.config['JSON_SORT_KEYS'] = False
-  
+app.register_blueprint(user)    
+
 @app.route("/")
 def index():
 	return render_template("index.html")
@@ -22,4 +22,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run(host='0.0.0.0',port=3000,debug=True)
+if __name__ == "__main__":
+	app.run(host='0.0.0.0',port=3000)

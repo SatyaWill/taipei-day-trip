@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 import sys, re
 sys.path.append("..") 
-from model.fetch import *
-from model.token_set import *
+from model import md5, selectone, edit_db, make_token, decode_token
 
 user = Blueprint('user', __name__)
 # 註冊
@@ -33,6 +32,7 @@ def signup():
 def signin():
     email = request.json.get('email')
     password = request.json.get('password')
+    print(email,password)
     pw = md5(password)
     res = selectone('SELECT id, name, email FROM users WHERE email=%s and password=%s',(email, pw))
     try:
@@ -52,7 +52,7 @@ def get_userinfo():
     try:
         if request.cookies:
             token = request.cookies.get("token")
-            res = jwt.decode(token, secret_key, algorithms=["HS256"])
+            res = decode_token(token)
             if res:
                 del res['expire']
                 return {"data":res}, 200

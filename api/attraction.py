@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import re, sys
 sys.path.append("..")
-from model.fetch import *
+from model import selectall, selectall_img, selectone
 
 attraction = Blueprint('attraction', __name__)
 
@@ -14,7 +14,7 @@ def att_page():
         if keyword:
             sql = 'SELECT attractions.*, images FROM attractions left join images on \
             attractions.id=images.att_id WHERE category=%s OR INSTR(name, %s) ORDER BY id LIMIT %s,13'
-            res = selectall2(sql, (keyword, keyword ,page*12))
+            res = selectall_img(sql, (keyword, keyword ,page*12))
             if len(res) > 12:
                 return {"nextPage":page+1,"data":res[0:12]}, 200
             else:
@@ -22,7 +22,7 @@ def att_page():
         else:
             sql = 'SELECT attractions.*, images FROM attractions left join images on \
                 attractions.id=images.att_id ORDER BY id LIMIT %s,13'
-            res = selectall2(sql, (page*12,))
+            res = selectall_img(sql, (page*12,))
             if len(res) > 12:          
                 return {"nextPage":page+1,"data":res[0:12]}, 200
             else:

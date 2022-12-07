@@ -1,21 +1,7 @@
-import json, re, app_pw, mysql.connector
-
-conn =  mysql.connector.connect(
-    host = '127.0.0.1',
-    port = '3306',
-    database = 'tp_att',
-    user='root',
-    password = app_pw.pw()
-    )
-cursor = conn.cursor(dictionary=True)
-
-def add(sql, val=''): # 編輯SQL資料
-    try:
-        cursor.execute(sql, val)
-        conn.commit()
-    except Exception as e:
-        print(e)
-
+import json, re
+import sys
+sys.path.append("..")
+from setting import add
 
 add("DROP TABLE IF EXISTS category")
 add('DROP TABLE IF EXISTS images')
@@ -42,16 +28,15 @@ add('CREATE TABLE images (\
 
 with open("taipei-attractions.json", mode="r") as file:
     data=json.load(file)
-TPTrip=data['result']['results']
-reg=re.compile(r'https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpg|png)')
-for d in TPTrip:
-    sql="INSERT attractions VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    val=(d['_id'],d['name'],d['CAT'],d['description'],d['address'],d['direction'],d['MRT'],d['latitude'],d['longitude'])
-    add(sql,val)
-    sql2="INSERT images VALUES(%s,%s)"
-    val2=(d['_id'], ",".join(reg.findall(d['file'].lower())))
-    add(sql2,val2)
-
+    TPTrip=data['result']['results']
+    reg=re.compile(r'https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpg|png)')
+    for d in TPTrip:
+        sql="INSERT attractions VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        val=(d['_id'],d['name'],d['CAT'],d['description'],d['address'],d['direction'],d['MRT'],d['latitude'],d['longitude'])
+        add(sql,val)
+        sql2="INSERT images VALUES(%s,%s)"
+        val2=(d['_id'], ",".join(reg.findall(d['file'].lower())))
+        add(sql2,val2)
 
 add("CREATE TABLE category SELECT DISTINCT category FROM attractions ORDER BY category DESC")
 

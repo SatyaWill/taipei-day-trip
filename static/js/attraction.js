@@ -6,9 +6,6 @@
 預約行程
 */
 
-const el_class = (name) => document.getElementsByClassName(name);
-const el_tag = (name) => document.getElementsByTagName(name);
-const el_qr = (name) => document.querySelector(name);
 // 串接後端資料
 const id = new URL(location.href).pathname.split("/")[2];
 fetch('/api/attraction/'+ id).then(res=>res.json()).then(data=>{

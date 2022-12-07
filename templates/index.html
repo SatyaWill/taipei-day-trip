@@ -21,43 +21,44 @@
                     <div class="hidden" id="nav_signout" onclick="signout()" >登出系統</div>
                 </div>
             </div>
-            <dialog id="signin_dialog" class="sign_dialog">
-                <h2>登入會員帳號</h2>
-                <form method="dialog" id="signin_form" method="POST">
-                    <div class="close"></div>
-                    <!--email-->
-                    <input type="email" name="email" class="sign" id="signin_email" autocomplete="username" 
-                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
-                    <!--pw-->
-                    <input type="password" name="password" class="sign" id="signin_password" autocomplete="current-password" 
-                        pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$"
-                        oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
-                        placeholder="輸入密碼(英、數組合6字以上)" required>
-                    <button class="dialog_btn" >登入帳戶</button>
-                </form>
-                <p class="hidden" id="signin_info"></p>
-                <span id="to_signup">還沒有帳戶？點此註冊</span>
-            </dialog>
-            <dialog id="signup_dialog" class="sign_dialog">
-                <h2>註冊會員帳號</h2>
-                <form method="dialog" id="signup_form" method="POST">
-                    <div class="close"></div>
-                    <!--name-->
-                    <input type="text" name="name" class="sign" id="signup_name" placeholder="輸入姓名" required>
-                    <!--email-->
-                    <input type="email" name="email" class="sign" id="signup_email" autocomplete="username" 
-                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
-                    <!--pw-->
-                    <input type="password" name="password" class="sign" id="signup_password" 
-                        autocomplete="new-password" pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$" 
-                        oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
-                        placeholder="輸入密碼(英、數組合6字以上)" required>
-                    <button class="dialog_btn">註冊新帳戶</button>
-                </form>
-                <p class="hidden" id="signup_info"></p>
-                <span id="to_signin">已經有帳戶了？點此登入</span>
-            </dialog>
-            <dialog id="signin_out_ok"></dialog>
+            <div>
+                <dialog id="signin_dialog" class="sign_dialog">
+                    <h2>登入會員帳號</h2>
+                    <form method="dialog" id="signin_form" method="POST">
+                        <div class="close"></div>
+                        <!--email-->
+                        <input type="email" name="email" class="sign" id="signin_email" autocomplete="username" 
+                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
+                        <!--pw-->
+                        <input type="password" name="password" class="sign" id="signin_password" autocomplete="current-password" 
+                            pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$"
+                            oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
+                            placeholder="輸入密碼(英、數組合6字以上)" required>
+                        <button class="dialog_btn" >登入帳戶</button>
+                    </form>
+                    <p class="hidden" id="signin_info"></p>
+                    <span id="to_signup">還沒有帳戶？點此註冊</span>
+                </dialog>
+                <dialog id="signup_dialog" class="sign_dialog">
+                    <h2>註冊會員帳號</h2>
+                    <form method="dialog" id="signup_form" method="POST">
+                        <div class="close"></div>
+                        <!--name-->
+                        <input type="text" name="name" class="sign" id="signup_name" placeholder="輸入姓名" required>
+                        <!--email-->
+                        <input type="email" name="email" class="sign" id="signup_email" autocomplete="username" 
+                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
+                        <!--pw-->
+                        <input type="password" name="password" class="sign" id="signup_password" 
+                            autocomplete="new-password" pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$" 
+                            oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
+                            placeholder="輸入密碼(英、數組合6字以上)" required>
+                        <button class="dialog_btn">註冊新帳戶</button>
+                    </form>
+                    <p class="hidden" id="signup_info"></p>
+                    <span id="to_signin">已經有帳戶了？點此登入</span>
+                </dialog>
+                <dialog id="signin_out_ok"></dialog>
         </nav>
         {% block content %}
         <main>
