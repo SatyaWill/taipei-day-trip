@@ -1,72 +1,13 @@
-from flask import *
-import mysql.connector.pooling as pooling, re
-from data import app_pw
-from model.fetch import *
+from flask import Flask, render_template
+from api.attraction import attraction
+from api.user import user
+from setting import setting
 
-app = Flask(__name__, static_folder="static", static_url_path="/static")
-app.config["JSON_AS_ASCII"]=False
-app.config["TEMPLATES_AUTO_RELOAD"]=True
-app.config['JSON_SORT_KEYS'] = False
-pool = pooling.MySQLConnectionPool(
-    pool_name = "mypool",
-    pool_size = 5,
-    pool_reset_session = True,
-    host = '127.0.0.1',
-    database = 'tp_att',
-    user='root',
-    password = app_pw.pw()
-    )
-  
-@app.route("/api/attractions")
-def att_page():
-    page = request.args.get('page')
-    keyword = request.args.get('keyword')
-    try:
-        page = int(page)
-        if keyword:
-            sql = 'SELECT attractions.*, images FROM attractions left join images on \
-            attractions.id=images.att_id WHERE category=%s OR INSTR(name, %s) ORDER BY id LIMIT %s,13'
-            res = selectall2(sql, (keyword, keyword ,page*12))
-            if len(res) > 12:
-                return {"nextPage":page+1,"data":res[0:12]}, 200
-            else:
-                return {"nextPage":None,"data":res}, 200
-        else:
-            sql = 'SELECT attractions.*, images FROM attractions left join images on \
-                attractions.id=images.att_id ORDER BY id LIMIT %s,13'
-            res = selectall2(sql, (page*12,))
-            if len(res) > 12:          
-                return {"nextPage":page+1,"data":res[0:12]}, 200
-            else:
-                return {"nextPage":None,"data":res}, 200
-    except Exception as e:
-        print(e)
-        return jsonify(error=True, message="伺服器內部錯誤"), 500
-
-@app.route("/api/attraction/<int:attractionId>")
-def att(attractionId):
-    try:
-        sql = 'SELECT attractions.*, images FROM attractions left join images on \
-        attractions.id=images.att_id WHERE id=%s'
-        res = selectone(sql, (attractionId,))
-        if res:
-            res['images'] = re.findall(r'http.*?[j|p][p|n]g',res['images'])  
-            return {"data":res}, 200
-        else:
-            return jsonify(error=True, message="景點編號不正確"), 400
-    except Exception as e:
-        print(e)
-        return jsonify(error=True, message="伺服器內部錯誤"), 500
-    
-@app.route("/api/categories")
-def categories():
-    try:
-        sql = 'SELECT category FROM category'
-        res = [item['category'] for item in selectall(sql)]
-        return {"data":res}, 200
-    except Exception as e:
-        print(e)
-        return jsonify(error=True, message="伺服器內部錯誤"), 500
+app = Flask(__name__)
+app.config.from_object(setting)
+app.jinja_env.auto_reload = True
+app.register_blueprint(attraction)
+app.register_blueprint(user)    
 
 @app.route("/")
 def index():
@@ -81,4 +22,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run(host='0.0.0.0',port=3000,debug=True)
+if __name__ == "__main__":
+	app.run(host='0.0.0.0',port=3000)
