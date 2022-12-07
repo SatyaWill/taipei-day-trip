@@ -262,6 +262,9 @@ iframe{
         left: 2.5%;
         width: 95%;
     }
+    .att_name{
+        height: auto;
+    }
     #search_dialog{
         width: 322px;
     }
