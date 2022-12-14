@@ -1,0 +1,59 @@
+<p class="headline"></p>
+<div id="booking_data">
+    <section class="sec_1">
+        <div id="booking_pic"><img id="booking_img"></div>
+        <div id="booking_info">
+            <div id="delete_booking"></div>
+            <h4 class="title" id="booking_title"></h4>
+            <h4 class="title">日期：
+                <span class="content" id="booking_date"></span>
+            </h4>
+            <h4 class="title">時間：
+                <span class="content" id="booking_time"></span>
+            </h4>
+            <h4 class="title">費用：
+                <span class="content" id="booking_price"></span>
+            </h4>
+            <h4 class="title">地點：
+                <span class="content" id="booking_address">臺北市 大安區忠孝東路4段</span>
+            </h4>
+        </div>
+    </section>
+    <hr/>
+    <section class="sec_2">
+        <p class="sec_title">您的聯絡資訊</p>
+        <p class="content">聯絡姓名：
+            <input type="text" name="name" class="booking_input" id="booking_name" required>
+        </p>
+        <p class="content">連絡信箱：
+            <input type="email" name="email" class="booking_input" id="booking_email"
+            psec_ern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" required>
+        </p>
+        <p class="content">手機號碼：
+            <input type="tel" name="phone" class="booking_input" id="booking_phone" maxlength="12"
+            pattern="[0]{1}[9]{1}[0-9]{2} [0-9]{3} [0-9]{4}" required>
+        </p>
+        <h4 class="title">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</h4>
+    </section>
+    <hr/>
+    <section class="sec_3">
+        <p class="sec_title">信用卡付款資訊</p>
+        <p class="content">卡片號碼：
+            <input type="tel" name="credit_number" class="booking_input" id="cc_number"
+            pattern="^\d{4} \d{4} \d{4} \d{4}$" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" required>
+        </p>
+        <p class="content">過期時間：
+            <input type="tel" name="credit_expires" class="booking_input" id="cc_exp"
+            pattern="\d*" maxlength="7" placeholder="MM / YY" required>
+        </p>
+        <p class="content">驗證密碼：
+            <input type="tel" name="credit_cvv" class="booking_input" id="cc_cvv" 
+            pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" maxlength="3" placeholder="CVV" required>
+        </p>
+    </section>
+    <hr/>
+    <section class="sec_4">
+        <h4 class="title" id="booking_total">總價：新台幣 2000 元</h4>
+        <button id="to_pay">確認訂購並付款</button>
+    </section>
+<div>

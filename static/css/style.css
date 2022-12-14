@@ -32,6 +32,7 @@ nav{
     display: flex;
     justify-content:center;
     align-items: center;
+    box-shadow: 0px 2px 3px #eeeeee;
     top: 0px;
     width: 100%;
     height: 54px;
@@ -82,7 +83,7 @@ nav{
     font-weight: 900;
 }
 
-.sign_dialog, #signin_out_ok{
+.sign_dialog, #signin_out_ok, #reserve_dialog{
     box-sizing: border-box;
     width: 340px;
     margin: 0 auto auto;
@@ -126,13 +127,13 @@ h2{
     height: 16px;
     right: 17px;
     top: 17px;
-    background: url(/static/pic//ico_close.png);
+    background: url(/static/pic/ico_close.png);
     background-size: cover;
 }
 
-.sign_dialog input, .dialog_btn{
+.sign_dialog input, .dialog_btn, .end_labeled{
     box-sizing: border-box;
-    width: 310px;
+    width: 100%;
     height: 47px;
     border: 1px solid #CCCCCC;
     border-radius: 5px;
@@ -146,6 +147,58 @@ h2{
     color: #757575;
 }
 
+.error_input{
+    font-weight: 500;
+    font-size: 16px;
+    color: #757575;
+    border: 1px solid rgba(210, 20, 20, 0.603) !important;
+}
+
+.end_labeled{
+    position: relative;
+    border: 0;
+}
+
+.end_labeled input{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.end_labeled span{
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    line-height: 20px;
+    height: 47px;
+}
+
+#signin_form p, #signup_form p{ 
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 0 10px 5px;
+}
+
+
+.hidden{
+    display: none;
+}
+
+#signin_info, #signup_info{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.error{
+    color: rgba(210, 20, 20, 0.603);
+}
+
+.ok{
+    color: green;
+}
+
 .dialog_btn{
     cursor: pointer;
     background: #448899;
@@ -156,29 +209,7 @@ h2{
     text-align: center;
 }
 
-.hidden{
-    display: none;
-}
-
-.sign_dialog p{
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.error{
-    color: rgba(210, 20, 20, 0.603);
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.ok{
-    color: green;
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.sign_dialog span{
+#to_signin, #to_signup{
     cursor: pointer;
     font-weight: 500;
     font-size: 16px;
@@ -199,8 +230,39 @@ footer p{
     top: 45px;
     color: #FFFFFF;
 }
+
 @media(max-width:500px){
     #signin_out_ok{
         font-size: 16px;
+    }
+}
+
+@media(max-width:300px){
+    .slogan{
+        width: 90%;
+    }
+    .left,.slogan h1{
+        font-size: 24px;
+        padding: 0px;
+    }
+
+    .slogan h4{
+        height: auto;
+        margin: 10px auto 25px;
+    }
+
+    .item{
+        font-size: 15px;
+        padding: 5px;
+    }
+
+    #search, #search_dialog {
+        width: 190px;
+    }
+    #search_icon{
+        width: 50px;
+    }
+    .welcome{
+        margin-bottom: 30px;
     }
 }

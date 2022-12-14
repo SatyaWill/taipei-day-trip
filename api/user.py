@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
-import sys, re
+import sys
 sys.path.append("..") 
-from model import md5, selectone, edit_db, make_token, decode_token
+from model import md5, selectone, edit_db, make_token, decode_token, validate_email, validate_password
 
 user = Blueprint('user', __name__)
 # 註冊
@@ -10,8 +10,7 @@ def signup():
     name = request.json.get('name')
     email = request.json.get('email')
     password = request.json.get('password')
-    is_match = (re.match("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$", email) and
-                re.match("^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$", password))
+    is_match = (validate_email(email) and validate_password(password))
     try:
         if is_match:
             res = selectone("SELECT COUNT(*) count FROM users WHERE email=%s", (email,))['count']
@@ -32,7 +31,6 @@ def signup():
 def signin():
     email = request.json.get('email')
     password = request.json.get('password')
-    print(email,password)
     pw = md5(password)
     res = selectone('SELECT id, name, email FROM users WHERE email=%s and password=%s',(email, pw))
     try:

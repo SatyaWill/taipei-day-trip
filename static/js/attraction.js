@@ -6,14 +6,14 @@
 預約行程
 */
 
-// 串接後端資料
+// 串接後端資料 ====================================================
 const id = new URL(location.href).pathname.split("/")[2];
 fetch('/api/attraction/'+ id).then(res=>res.json()).then(data=>{
         detail = data.data;
         load(detail);
     })
 
-// 載入資料fx
+// 載入資料fx ====================================================
 function load(detail){
     images = detail.images;
     images.forEach((item, index) => {
@@ -23,10 +23,7 @@ function load(detail){
         img.src = item;
         img.style.display = "none";
         dot.className = "dot";
-        dot.onclick = function(){
-            let n = index+1;
-            showSlides(slideIndex=n);
-        };
+        dot.onclick = ()=>{show_pic(slide_index=index+1)};
         el("slide").appendChild(img);
         el_class("dots")[0].appendChild(dot);
     });
@@ -41,35 +38,54 @@ function load(detail){
     el_qr(".desc").textContent = detail.description;
     el_qr(".address").textContent = detail.address;
     el_qr(".transport").textContent = detail.transport;
-    el_tag("iframe")[0].src="https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q="+detail.lat+","+detail.lng+"("+detail.name+")"+"&z=16&output=embed&t="
+    el_tag("iframe")[0].src=`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${detail.lat},${detail.lng}${detail.name})&z=16&output=embed&t=`
 };
 
-// 照片輪播控制
-const slide_pic = document.getElementsByClassName("slide_pic");
-const dot = document.getElementsByClassName("dot");
-let slideIndex = 1;
-function slides(n){ // 前後控制
-    showSlides(slideIndex += n);
-};
-function showSlides(n){ 
-    let i;
-    if(n > slide_pic.length){slideIndex = 1 }
-    if(n < 1){ slideIndex = slide_pic.length }
-    for(i = 0; i < slide_pic.length; i++){
-        slide_pic[i].style.display = "none";
-    }
-    for(i = 0; i < dot.length; i++){
-        dot[i].className = dot[i].className.replace(" active", "");
-    }
-    slide_pic[slideIndex - 1].style.display = "";
-    dot[slideIndex - 1].className += " active";
+// 照片輪播控制 ================================================================
+const slide_pic = el_class("slide_pic");
+const dot = el_class("dot");
+let slide_index = 1;
+el("prev").onclick = ()=>{show_pic(slide_index-=1)};
+el("next").onclick = ()=>{show_pic(slide_index+=1)};
+function show_pic(n){ 
+    if(n > slide_pic.length){slide_index = 1}
+    if(n < 1){ slide_index = slide_pic.length}
+    Array.from(slide_pic).forEach(pic=>{pic.style.display = "none";});
+    Array.from(dot).forEach(dot=>{dot.classList.remove("active");});
+    slide_pic[slide_index - 1].style.display = "";
+    dot[slide_index - 1].className += " active";
 }
 
-// 日期預設當天、上/下午不同導覽費用
-el("date").valueAsDate = new Date();
-el("morning").addEventListener("click", event=>{
-    el("price").value = 2000;
-});
-el("afternoon").addEventListener("click", event=>{
-    el("price").value = 2500;
-});
+
+// 日期預設/最小值為當天、選取區間 1 個月 ==============================================
+let today = new Date();
+const tomorrow = new Date(today.setDate(today.getDate()+1));
+const max_day = new Date(today.setMonth(today.getMonth()+1)).toLocaleDateString('en-ca') ;
+el("date").valueAsDate = tomorrow;
+el("date").min = tomorrow.toLocaleDateString('en-ca');
+el("date").max = max_day;
+
+// 上/下午不同導覽費用 ==============================================
+el("morning").onclick = ()=>{el("price").value = 2000};
+el("afternoon").onclick = ()=>{el("price").value = 2500};
+
+// 預約行程 ===============================================================
+el("reserve").onclick = ()=>{booking()};
+async function booking(){
+    const res = await fetch('/api/booking', {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({
+            attractionId: id,
+            date: el("date").value,
+            time: el_qr('input[name="time"]:checked').value,
+            price: el("price").value
+        }),
+        cache: "no-cache",
+        headers: {
+            "content-type": "application/json",
+        }
+    });
+    if(res.status===200) return location.href = "/booking";
+    el("signin_dialog").showModal();
+}; 
