@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>台北一日遊</title>
+    <link rel="icon" type="image/png" href="/static/pic/101.ico"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/attraction.css"/>
+</head>
+<body>
+    <div id="page-container">
+        <nav></nav>
+        <main>
+            <section class="att1">
+                <div class="fade" id="slide">
+                    <div class="slide_btn prev" onclick="slides(-1)"></div>
+                    <div class="slide_btn next" onclick="slides(1)"></div>
+                    <div class="dots"></div>
+                </div>
+                <div class="profile">
+                    <p class="att_name"></p>
+                    <p class="cat_mrt"></p>
+                    <form class="booking">
+                        <p class="title">訂購導覽行程</p>
+                        <p class="content">以此景點為中心的一日行程，帶您探索城市角落故事</p>
+                        <p class="title">選擇日期：<input type="date" id="date" name="date" required></p>
+                        <p class="title time">選擇時間：
+                            <input type="radio" id="morning" name="time" value="morning" checked>
+                            <label>上半天</label>
+                            <input type="radio" id="afternoon" name="time" value="afternoon">
+                            <label>下半天</label>
+                        </p>
+                        <p class="title">導覽費用：
+                            <span class="content">新台幣 <input type="text" name="price" id="price" value="2000" readonly> 元</span>
+                        </p>
+                        <input type="button" id="reserve" value="開始預約行程" onclick="reserve_()">
+                    </form>
+                </div>
+            </section>
+            <hr/>
+            <section class="att2">
+                <p class="desc"></p>
+                <p class="desc_title">景點地址：</p>
+                <p class="address"></p>
+                <p class="desc_title">交通方式：</p>
+                <p class="transport"></p>
+            </section>
+        </main>
+    </div>
+        <footer>
+            <p>COPYRIGHT © 2021 台北一日遊</p>
+        </footer>
+        <script src="/static/js/user.js"></script>
+        <script src="/static/js/attraction.js"></script>
+        <script>
+            // 引入/static/nav.html
+            
+            /*
+            fetch("/static/nav.html").then(res=>res.text()).then(data=>{
+                document.getElementsByTagName("nav")[0].innerHTML = data;
+            });
+            */
+            </script>
+</body>
+</html>

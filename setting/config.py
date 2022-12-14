@@ -28,5 +28,6 @@ class setting:
     TEMPLATES_AUTO_RELOAD = True
     JSON_SORT_KEYS = False
     SECRET_KEY = os.getenv('SECRET_KEY')
+    SALT = os.getenv('SALT')
 
 

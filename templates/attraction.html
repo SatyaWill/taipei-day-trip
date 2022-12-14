@@ -7,14 +7,14 @@
 <main>
     <section class="att1">
         <div class="fade" id="slide">
-            <div class="slide_btn prev" onclick="slides(-1)"></div>
-            <div class="slide_btn next" onclick="slides(1)"></div>
+            <div class="slide_btn" id="prev"></div>
+            <div class="slide_btn" id="next"></div>
             <div class="dots"></div>
         </div>
         <div class="profile">
             <p class="att_name"></p>
             <p class="cat_mrt"></p>
-            <form class="booking">
+            <form class="booking" method="POST">
                 <p class="title">訂購導覽行程</p>
                 <p class="content">以此景點為中心的一日行程，帶您探索城市角落故事</p>
                 <p class="title">選擇日期：<input type="date" id="date" name="date" required></p>
@@ -27,7 +27,7 @@
                 <p class="title">導覽費用：
                     <span class="content">新台幣 <input type="text" name="price" id="price" value="2000" readonly> 元</span>
                 </p>
-                <input type="button" id="reserve" value="開始預約行程" onclick="reserve_()">
+                <input type="button" id="reserve" value="開始預約行程">
             </form>
         </div>
     </section>

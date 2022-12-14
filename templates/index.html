@@ -16,9 +16,9 @@
             <div class="frame">
                 <div class="left" onclick="location.href='/'">台北一日遊</div>
                 <div class="right">
-                    <div class="item">預定行程</div>
+                    <div class="item" id="nav_booking">預定行程</div>
                     <div class="item" id="nav_signin_up">登入/註冊</div>
-                    <div class="hidden" id="nav_signout" onclick="signout()" >登出系統</div>
+                    <div class="hidden" id="nav_signout">登出系統</div>
                 </div>
             </div>
             <div>
@@ -29,11 +29,13 @@
                         <!--email-->
                         <input type="email" name="email" class="sign" id="signin_email" autocomplete="username" 
                             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
+                        <p class="hidden" id="signin_email_hint"></p>
                         <!--pw-->
                         <input type="password" name="password" class="sign" id="signin_password" autocomplete="current-password" 
                             pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$"
                             oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
                             placeholder="輸入密碼(英、數組合6字以上)" required>
+                        <p class="hidden" id="signin_password_hint"></p>
                         <button class="dialog_btn" >登入帳戶</button>
                     </form>
                     <p class="hidden" id="signin_info"></p>
@@ -46,13 +48,21 @@
                         <!--name-->
                         <input type="text" name="name" class="sign" id="signup_name" placeholder="輸入姓名" required>
                         <!--email-->
-                        <input type="email" name="email" class="sign" id="signup_email" autocomplete="username" 
-                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
+                        <div class="end_labeled">
+                            <input type="email" name="email" class="sign" id="signup_email" autocomplete="username" 
+                                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
+                            <span class="hidden" id="check_email"></span>
+                        </div class= "end_labeled">
+                        <p class="hidden" id="signup_email_hint"></p>
                         <!--pw-->
-                        <input type="password" name="password" class="sign" id="signup_password" 
-                            autocomplete="new-password" pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$" 
-                            oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
-                            placeholder="輸入密碼(英、數組合6字以上)" required>
+                        <div class="end_labeled">
+                            <input type="password" name="password" class="sign" id="signup_password" 
+                                autocomplete="new-password" pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$" 
+                                oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
+                                placeholder="輸入密碼(英、數組合6字以上)" required>
+                            <span class="hidden" id="check_password"></span>
+                        </div>
+                        <p class="hidden" id="signup_password_hint"></p>
                         <button class="dialog_btn">註冊新帳戶</button>
                     </form>
                     <p class="hidden" id="signup_info"></p>
@@ -83,7 +93,7 @@
         <footer>
             <p>COPYRIGHT © 2021 台北一日遊</p>
         </footer>
-        <script src="/static/js/user.js"></script>
+        <script src="/static/js/user_mvc.js"></script>
         {% block script %}
         <script src="/static/js/index.js"></script>
         {% endblock %}

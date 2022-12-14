@@ -33,9 +33,14 @@
     position: relative;
 }
 
-#search, #search_icon{
+#search{
     height: 46px;
-    border-radius: 5px;
+    border-radius: 5px 0  0 5px;
+}
+
+#search_icon{
+    height: 46px;
+    border-radius: 0 5px 5px 0;
 }
 
 #search, #search_dialog{
