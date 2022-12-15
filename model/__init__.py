@@ -1,5 +1,4 @@
-import model.fetch
-import model.token_set
+import model.fetch, model.token_set, model.validate_regex
 
 selectone = model.fetch.selectone
 selectall = model.fetch.selectall
@@ -11,5 +10,6 @@ make_token = model.token_set.make_token
 decode_token = model.token_set.decode_token
 token_required = model.token_set.token_required
 
-
+validate_email =model.validate_regex.validate_email
+validate_password =model.validate_regex.validate_password
 

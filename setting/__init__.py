@@ -11,3 +11,4 @@ setting = config.setting
 
 # for model.token_set.py
 SECRET_KEY = config.setting.SECRET_KEY
+SALT = config.setting.SALT

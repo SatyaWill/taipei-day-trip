@@ -3,14 +3,12 @@ import jwt, sys, time, hashlib
 from jwt import exceptions
 from functools import wraps
 sys.path.append("..") 
-from setting import SECRET_KEY
+from setting import SALT, SECRET_KEY
 
 def md5(pwd):  # 密碼加密
-    SALT = b'2erer3asdfwerxdf34sdfsdfs90'
-    obj = hashlib.md5(SALT)
+    obj = hashlib.md5(SALT.encode(encoding='utf-8'))
     obj.update(pwd.encode('utf-8'))
     return obj.hexdigest()
-
 
 def make_token(data):
     payload = {
@@ -33,9 +31,10 @@ def token_required(f):
             if request.cookies:
                 token = request.cookies.get("token")
                 res = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-                user_name = res['name']
-                user_email = res['email']
-            if not res:
+                if res:
+                    user_email = res['email']
+                    return f(user_email, *args, **kwargs)
+            else:
                 return jsonify(error=True, message="未登入系統，拒絕存取"), 403
         except exceptions.ExpiredSignatureError:
             msg = "(token失效)"
@@ -46,6 +45,8 @@ def token_required(f):
         except jwt.InvalidTokenError:
             msg = "(token無效)"
             return jsonify(error=True, message="未登入系統，拒絕存取"+msg), 403
-        return f(user_name, user_email, *args, **kwargs), 200
+        except Exception as e:
+            print(e)
+            return jsonify(error=True, message="伺服器內部錯誤"), 500
     return wrapped
 
