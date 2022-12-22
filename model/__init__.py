@@ -12,4 +12,5 @@ token_required = model.token_set.token_required
 
 validate_email =model.validate_regex.validate_email
 validate_password =model.validate_regex.validate_password
+validate_phone =model.validate_regex.validate_phone
 

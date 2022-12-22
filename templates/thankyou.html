@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% block title %}
+<title>訂單資訊</title>
+<link rel="stylesheet" type="text/css" href="/static/css/booking.css"/>
+{% endblock %}
+{% block content %}
+<main>
+    <p class="headline"></p>
+    <div id="booking_data" class="hidden">
+        <section class="sec_1">
+            <div id="booking_pic"><img id="booking_img"></div>
+            <div id="booking_info">
+                <h4 class="title">時間：
+                    <span class="content" id="order_time"></span>
+                </h4>
+                <h4 class="title">地點：
+                    <span class="content" id="order_address"></span>
+                </h4>
+                <h4 class="title">聯絡姓名：
+                    <span class="content" id="order_name"></span>
+                </h4>
+                <h4 class="title">聯絡信箱：
+                    <span class="content" id="order_email"></span>
+                </h4>
+                <h4 class="title">聯絡手機：
+                    <span class="content" id="order_phone"></span>
+                </h4>
+                <h4 class="title">導覽人員當日會與您聯繫，請保持手機暢通，並準時到達。</h4>
+            </div>
+        </section>
+</main>
+{% endblock %}
+{% block script %}
+<script src="/static/js/order.js"></script>
+{% endblock %}

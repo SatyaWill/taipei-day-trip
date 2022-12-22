@@ -59,7 +59,8 @@ def edit_db(sql, val=''): # 編輯SQL資料
         cursor = db.cursor(dictionary=True)
         cursor.execute(sql, val)
         db.commit()
-        print("異動筆數", db.cursor().rowcount)
+        res = cursor.rowcount
+        return res
     except Exception as e:
         if "db" in dir():
             db.rollback()
