@@ -9,12 +9,12 @@ booking = Blueprint('booking', __name__)
 @token_required
 def booking_check(user_email):
     if user_email:
-        sql = "SELECT a.id, a.name, a.address, \
-            SUBSTRING_INDEX(b.images, ',' , 1) image, \
-            DATE_FORMAT(c.date, '%Y-%m-%d') date, c.time, c.price \
-            FROM attractions a, images b, booking c \
-            WHERE c.user_email = %s AND \
-            a.id = c.att_id AND b.att_id = c.att_id"
+        sql = '''SELECT a.id, a.name, a.address, 
+            SUBSTRING_INDEX(b.images, ',' , 1) image, 
+            DATE_FORMAT(c.date, '%Y-%m-%d') date, c.time, c.price 
+            FROM attractions a, images b, booking c 
+            WHERE c.user_email = %s AND 
+            a.id = c.att_id AND b.att_id = c.att_id'''
         r = selectone(sql, (user_email,))
         if r:
             attraction = {

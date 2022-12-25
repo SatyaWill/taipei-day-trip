@@ -14,6 +14,11 @@ body {
 button, input{
     border: none;
     background-color: white;
+    border-radius: 5px;
+}
+
+input[disabled] {
+    cursor: not-allowed;
 }
 
 input, button:focus{
@@ -191,7 +196,7 @@ h2{
 }
 
 .error{
-    color: rgba(210, 20, 20, 0.603);
+    color: rgba(210, 20, 20, 0.8);
 }
 
 .ok{

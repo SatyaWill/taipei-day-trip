@@ -4,9 +4,10 @@ const el_class = (name) => document.getElementsByClassName(name);
 const el_qr = (name) => document.querySelector(name);
 const el_qrs = (name) => document.querySelectorAll(name);
 let model = {
-    user_info: null,
+    user_info: [],
     signin_status: null,
-    signup_res: null,
+    signup_status: null,
+    signup_res: [],
     signout_status: null,
     get_user_info(){
         return fetch("/api/user/auth").then(res=>res.json()).then(data=>{

@@ -29,5 +29,7 @@ class setting:
     JSON_SORT_KEYS = False
     SECRET_KEY = os.getenv('SECRET_KEY')
     SALT = os.getenv('SALT')
+    partner_key = os.getenv('partner_key')
+    merchant_id = os.getenv('merchant_id')
 
 
