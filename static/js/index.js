@@ -10,18 +10,18 @@ function load(details){
     details.forEach(item =>{
         const picbox = document.createElement('div');
         const img = document.createElement('img');
+        const img_inset = document.createElement('div');
         const name = document.createElement('div');
-        let mrt;
-        if(item.mrt){
-          mrt = item.mrt
-        }else{mrt = "無"};
+        const mrt = item.mrt ? item.mrt : "無"
         picbox.className = "picbox";
         name.className = "title";
         img.className = "pic";
         img.src = item.images[0];
+        img_inset.className = "pic_inset"
         name.innerHTML= "<p>"+item.name+"</p>";
         picbox.innerHTML = "<p>"+mrt+"</p><p>"+item.category+"</p>";
         picbox.appendChild(img);
+        picbox.appendChild(img_inset);
         picbox.appendChild(name);
         main.appendChild(picbox);
         picbox.addEventListener('click', function() {
@@ -104,10 +104,11 @@ document.addEventListener("click", event => {
     }
 });
 
-function search_att(){
+el("search_icon").addEventListener("click", function (){
     if(search.value){
         main.innerHTML="";
         page = 0;
         loadpage("&keyword="+search.value);
     }
-};
+});
+

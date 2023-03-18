@@ -8,8 +8,8 @@
     <p class="headline"></p>
     <div id="booking_data" class="hidden">
         <section class="sec_1">
-            <div id="booking_pic"><img id="booking_img"></div>
-            <div id="booking_info">
+            <div id="booking_pic" class="booking_pic"><img id="booking_img"></div>
+            <div id="booking_info" class="booking_info">
                 <div id="delete_booking"></div>
                 <h4 class="title" id="booking_title"></h4>
                 <h4 class="title">日期：
@@ -29,25 +29,25 @@
         <hr/>
         <section class="sec_2">
             <p class="sec_title">您的聯絡資訊</p>
-            <div class="input_box">
-                聯絡姓名：<input type="text" name="name" class="booking_input" id="booking_name" required>
-                <span class="hidden" id="booking_name_hint"></span>
+            <div class="input_box" >
+                聯絡姓名：<input type="text" name="name" class="booking_input" id="booking_name" data-valid="true" required>
+                <span class="hidden" id="booking_name_hint" errhint="姓名需2字以上" ></span>
             </div>
             <div class="input_box">
                 連絡信箱：<input type="email" name="email" class="booking_input" 
-                id="booking_email" required>
-                <span class="hidden" id="booking_email_hint"></span>
+                id="booking_email" data-valid="true" required>
+                <span class="hidden" id="booking_email_hint" errhint="格式不符"></span>
             </div>
             <div class="input_box">
                 手機號碼：<input type="tel" name="phone" class="booking_input" 
-                id="booking_phone" maxlength="12" required>
-                <span class="hidden" id="booking_phone_hint"></span>
+                id="booking_phone" maxlength="10" data-valid="true" required>
+                <span class="hidden" id="booking_phone_hint" errhint="手機共10碼"></span>
             </div>
             <h4 class="title">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</h4>
         </section>
         <hr/>
         <section class="sec_3">
-            <p class="sec_title">信用卡付款資訊</p>
+            <p class="sec_title" id="booking_card" data-valid="false">信用卡付款資訊</p>
             <div class="input_box">卡片號碼：
                 <div class="tpfield" id="card-number"></div>
             </div>
@@ -68,5 +68,6 @@
 {% endblock %}
 {% block script %}
 <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+<script src="/static/js/TapPay.js"></script>
 <script src="/static/js/booking.js"></script>
 {% endblock %}

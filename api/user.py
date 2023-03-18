@@ -1,48 +1,28 @@
-from flask import Blueprint, request, jsonify, make_response
-import sys
-sys.path.append("..") 
-from model import md5, selectone, edit_db, make_token, decode_token, validate_email, validate_password
+from flask import request, jsonify, make_response
+from api import user
+from controller import user_controller
+from utils import token_required
 
-user = Blueprint('user', __name__)
+controller = user_controller.UserController
 # 註冊
 @user.route("/api/user", methods=["POST"])
 def signup():
     name = request.json.get('name')
     email = request.json.get('email')
     password = request.json.get('password')
-    is_match = (validate_email(email) and validate_password(password))
-    try:
-        if is_match:
-            res = selectone("SELECT COUNT(*) count FROM users WHERE email=%s", (email,))['count']
-            if res == 1:
-                return jsonify(error=True, message="e-mail 已註冊"), 400
-            else:
-                pw = md5(password)
-                edit_db("INSERT INTO users(name, email, password) VALUES (%s, %s, %s)", (name, email, pw))
-                return {"ok":True}, 200
-        else:
-            return jsonify(error=True, message="電子信箱或密碼不符合要求"), 400
-    except Exception as e:
-        print(e)       
-        return jsonify(error=True, message="伺服器內部錯誤"), 500
+    phone = request.json.get('phone')
+    return controller.signup(name, email, password, phone)
+
+@user.route('/verify/<token>', methods=['GET'])
+def signup_verify(token):
+    return controller.signup_verify(token)
 
 # 登入
 @user.route("/api/user/auth", methods=["PUT"])
 def signin():
     email = request.json.get('email')
     password = request.json.get('password')
-    pw = md5(password)
-    res = selectone('SELECT id, name, email FROM users WHERE email=%s and password=%s',(email, pw))
-    try:
-        if res:
-            resp = make_response({"ok":True}, 200)
-            resp.set_cookie(key='token', value=make_token(res), max_age=60*60*24*7, httponly=True)
-            return resp
-        else:
-            return jsonify(error=True, message="登入失敗，帳號或密碼錯誤"), 400
-    except Exception as e:
-        print(e)       
-        return jsonify(error=True, message="伺服器內部錯誤"), 500
+    return controller.signin(email, password)
 
 # 取得登入資訊
 @user.route("/api/user/auth", methods=["GET"])
@@ -50,20 +30,57 @@ def get_userinfo():
     try:
         if request.cookies:
             token = request.cookies.get("token")
-            res = decode_token(token)
-            if res:
-                del res['expire']
-                return {"data":res}, 200
-        else:
-            return {"data":None}, 200
+            if token:
+                return controller.get_userinfo(token)
+        return {"data":None}, 200
     except Exception as e:
         print(e)
-        return jsonify(error=True, message="伺服器內部錯誤"), 500
+        return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+
+# 取得照片檔名
+@user.route("/api/s3_url", methods=["GET"])
+@token_required
+def s3_url(user_email):
+    return controller.s3_url(user_email)
+            
+# 修改頭貼
+@user.route("/api/member_pic", methods=["PATCH"])
+@token_required
+def member_pic(user_email):
+    member_pic = request.get_json()['member_pic']
+    return controller.member_pic(user_email, member_pic)
+
+# 修改名字
+@user.route("/api/name", methods=["PATCH"])
+@token_required
+def edit_name(user_email):
+    name = request.get_json()['name']
+    return controller.edit_name(user_email, name)
+        
+# 修改電話
+@user.route("/api/phone", methods=["PATCH"])
+@token_required
+def edit_phone(user_email):
+    phone = request.get_json()['phone']
+    return controller.edit_phone(user_email, phone)
+
+# 修改密碼
+@user.route("/api/password", methods=["PATCH"])
+@token_required
+def edit_password(user_email):
+    old_password = request.get_json()['old_password']
+    new_password = request.get_json()['new_password']
+    return controller.edit_password(user_email, old_password, new_password)
+
+# 取得帳號資訊
+@user.route("/api/account", methods=["GET"])
+@token_required
+def get_account(user_email):
+    return controller.get_account(user_email)
 
 # 登出
 @user.route("/api/user/auth", methods=["DELETE"])
 def signout():
-#token=; Max-Age=-1
     res = make_response({"ok":True}, 200)
     res.set_cookie(key='token', value='', max_age=-1, httponly=True)
     return res

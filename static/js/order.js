@@ -1,6 +1,6 @@
 let order_model = {
     order: [],
-    get_order(number){
+    async get_order(number){
         return fetch('/api/order/'+number).then(res=>res.json()).then(data=>{
             this.order = data.data;
         })
@@ -17,7 +17,7 @@ let order_view = {
             return
         } 
         const att = data.trip.attraction;
-        const time = data.trip.time === "morning" ? "早上 9 點到下午 4 點" : "下午 1 點到晚上 8 點";
+        const time = data.trip.time === "morning" ? "9:00-16:00" : "13:00-20:00";
         el_qr(".headline").textContent = `${att.name} (編號${data.number}) 已付款成功，祝順心愉快 😀`
         el("booking_data").className = "";
         el("booking_img").src = att.image;

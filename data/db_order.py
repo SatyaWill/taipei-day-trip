@@ -1,8 +1,9 @@
 import sys
 sys.path.append("..")
-from setting import add
+from model import add
 
 # 會員資料庫
+add("DROP TABLE IF EXISTS orders")
 add('''CREATE TABLE orders (
   order_number CHAR(14) NOT NULL PRIMARY KEY,
   status BIT(1) NOT NULL,

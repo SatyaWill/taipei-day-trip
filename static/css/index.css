@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 55px;
+    box-shadow: 2px 5px 5px -5px #9a9999;
 }
 
 .slogan{
@@ -36,6 +37,8 @@
 #search{
     height: 46px;
     border-radius: 5px 0  0 5px;
+    border: none !important;
+    box-shadow: inset 2px 3px 2px  rgb(167, 163, 163);
 }
 
 #search_icon{
@@ -46,12 +49,17 @@
 #search, #search_dialog{
     width: 400px;
     background: #FFFFFF;
-    border:1px solid #E8E8E8;
+    border: 1px solid #E8E8E8;
     filter: drop-shadow(0px 0px 20px #AABBCC);
     font-weight: bold;
     font-size: 16px;
+    line-height: 1em;
     padding: 15px;
     color: #757575;
+}
+
+#search{
+    padding-top: 18px;
 }
 
 #search_dialog{
@@ -62,13 +70,14 @@
     border-radius: 5px;
 }
 
-#search_dialog button{
+.search_item{
     cursor: pointer;
     padding: 10px 15px;
     width: 120px;
     height: 40px;
     font-weight: 500;
     font-size: 14px;
+    line-height: 1em;
     text-align: left;
     color: #000000;
     background-color: white;
@@ -107,9 +116,30 @@
     height: 242px;
     background: #FFFFFF;
     border: 1px solid #E8E8E8;
+    border-top: none;
+    border-right: none;
     border-radius: 5px;
     position: relative;
     box-sizing: border-box;
+    box-shadow: 5px 5px 5px -5px #9a9999;
+}
+
+.picbox:hover {
+    box-shadow: 3px 5px 5px -5px rgb(0, 0, 0);
+}
+
+.picbox:hover:before{ 
+    display: none; 
+}
+
+.picbox::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    border-radius: 5px;
+    background: -webkit-linear-gradient(top, rgba(222, 217, 123, 0.7) 0%,rgba(255, 255, 255, 0.753) 1%,rgba(255,255,255,0.55) 14%,rgba(255,255,255,0.48) 23%,rgba(255,255,255,0) 87%);
+    z-index: 1;
 }
 
 .picbox p{
@@ -127,11 +157,21 @@
     right: 10px;
 }
 
-.pic{
+.pic_inset, .pic{
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 197px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.pic_inset:hover{
+    box-shadow: inset 3px 6px 12px -5px rgb(106, 105, 105);
+}
+
+.pic{
     object-fit: cover;
-    border-radius: 5px 5px 0px 0px;
 }
 
 .title{
@@ -139,7 +179,7 @@
     top: 157px;
     width: 100%;
     height: 40px;
-    background: rgba(0,0,0,0.6);
+    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%,rgba(106,112,84,0.6) 100%);
 }
 
 .title p{

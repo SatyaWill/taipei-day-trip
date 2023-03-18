@@ -2,19 +2,28 @@ let booking_model = {
     booking: {},
     del_status: null,
     pay_status: null,
-    get_data(){
+    order_number: null,
+    async get_data(){
         return fetch('/api/booking').then(res=>res.json()).then(data=>{
             this.booking = data.data;
         })
     },
-    del_data(){
+    async del_data(){
         return fetch('/api/booking', {
             method: "DELETE",
             headers: {"Content-Type": "application/json"}
         }).then(res=>{this.del_status = res.status;})
     },
     // 付款 (TapPay) 取得資料 
-    pay(info){TPDirect.card.getPrime((result) => {
+    prime() { // 從 callback 非同步，改成 Promise 非同步
+        return new Promise((resolve, reject) => {
+            TPDirect.card.getPrime((result) => {
+                resolve(result);
+            })
+        })
+    },
+    pay: async function(info) {
+        const result = await this.prime();
         const order_trip = Object.assign({}, info);
         delete order_trip.price;
         if (result.status === 0) 
@@ -39,22 +48,20 @@ let booking_model = {
             this.pay_status = res.status;
             return res.json();
         }).then(data=>{
-            if(this.pay_status===200)
-            return location.href=`/thankyou?number=${data.data.number}`;
-            
+            this.order_number = data.data.number;
         })
-    })},
+    },
 }
 
 let booking_view = {
     send_order: {},
-    init_user(data){
+    async init_user(data){
         el_tag("main")[0].className = "";
         el_qr(".headline").textContent = `您好，${data.name}，待預訂的行程如下：`
         el("booking_name").value = data.name;
         el("booking_email").value = data.email;
     },
-    init(data){
+    async init(data){
         if(!data){
             el("booking_data").innerHTML = "目前沒有任何待預定的行程";
             el("booking_data").className = "";
@@ -68,9 +75,10 @@ let booking_view = {
         el("booking_time").textContent = data.time === "morning" ? "早上 9 點到下午 4 點" : "下午 1 點到晚上 8 點";
         el("booking_price").textContent = `新台幣 ${data.price} 元`;
         el("booking_address").textContent = att.address;
+        el("booking_phone").value = data.phone;
         el("booking_total").textContent = `總價：新台幣 ${data.price} 元`;
 // ==== 信用卡資訊 (TapPay) ====================================================
-        TPDirect.setupSDK(126850, 'app_tjaCOqhGDmAWl3IZvwnHKCkTAljYzk7JLFqXMCJHic4rg6fOpU01bfvXjaZj', 'sandbox');
+        TPDirect.setupSDK(app_id, app_key, 'sandbox');
         const fields = {
             number: {
                 element: '#card-number',
@@ -107,71 +115,18 @@ let booking_view = {
         });
 
 // ===== 聯絡 / 付款資訊 提示、付款 btn 可按控制  =============================================
-        let booking_name_status = true;
-        let booking_email_status = true;
-        let booking_phone_status = false;
-        let card_status = false;
-        function can_pay_toggle(){
-            if(booking_name_status*booking_phone_status*booking_email_status*card_status)
-                return el("to_pay").removeAttribute('disabled');
-            el("to_pay").setAttribute('disabled', true);
-        }
-        // 聯絡姓名確認
-        el("booking_name").addEventListener("change", function(){
-            if (el("booking_name").value == ""){
-                el("booking_name_hint").innerHTML = "<b>請輸入聯絡姓名</b>";
-                el("booking_name_hint").className = "error";
-                booking_name_status = false;
-                
-            }else{
-                el("booking_name_hint").className = "hidden";
-                booking_name_status = true;
-            }
-            can_pay_toggle();
-        });
-        // email驗證
-        el("booking_email").addEventListener("change", function(){
-            if (el("booking_email").value !== ""){
-                const email_rule = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$/;
-                if (!email_rule.test(el("booking_email").value)){
-                    el("booking_email_hint").innerHTML = "<b>格式不符，請確認</b>";
-                    el("booking_email_hint").className = "error";
-                    el("booking_email").classList.add("error");
-                    booking_email_status = false;
-                }else{
-                    el("booking_email_hint").className = "hidden";
-                    el("booking_email").classList.remove("error");
-                    booking_email_status = true;
-                }
-            }
-            can_pay_toggle();
-        });
-        // 手機驗證
-        el("booking_phone").addEventListener("change", function(){
-            if (el("booking_phone").value !== ""){
-                const phone_rule = /^09\d{8}$/;
-                if (!phone_rule.test(el("booking_phone").value)){
-                    el("booking_phone_hint").innerHTML = "<b>格式不符，請確認</b>";
-                    el("booking_phone_hint").className = "error";
-                    el("booking_phone").classList.add("error");
-                    booking_phone_status = false;
-                }else{
-                    el("booking_phone_hint").className = "hidden";
-                    el("booking_phone").classList.remove("error");
-                    booking_phone_status = true;
-                }
-            }
-            can_pay_toggle();
-        });
-        // 信用卡驗證 (TapPay)
-        TPDirect.card.onUpdate(update=>{
-            if(update.canGetPrime){
-                card_status = true
-            }else{
-                card_status = false
-            }
-            can_pay_toggle();
-        });
+        function input_check(item) {
+            const fields = ["booking_name", "booking_email", "booking_phone", "booking_card"];
+            const can_pay = () => el("to_pay").disabled = !fields.every(id => el(id).dataset.valid === "true");
+          
+            if (item === "card") 
+            return TPDirect.card.onUpdate(u=>{ el(`booking_card`).dataset.valid = u.canGetPrime, can_pay()});
+            input_event("booking", item, "error", "⚠️", can_pay, "change")
+          }
+          input_check("name");
+          input_check("email");
+          input_check("phone");
+          input_check("card");
     },
 }
 
@@ -187,16 +142,17 @@ let booking_controller = {
         await booking_model.del_data();
         if(booking_model.del_status===200) return location.reload();
     },
-    pay(){
-        booking_model.pay(booking_model.booking);
+    pay: async function(){
+        await booking_model.pay(booking_model.booking);
+        if(booking_model.pay_status===200)
+        return location.href=`/thankyou?number=${booking_model.order_number}`;
     }
 }
 
 booking_controller.init();
-el("delete_booking").addEventListener("click",()=>{
-    booking_controller.del_booking();
-});
+el("delete_booking").onclick = () => booking_controller.del_booking();
 
-el("to_pay").addEventListener("click",()=>{
+el("to_pay").onclick = () => {
+    hint_dialog("<h1>付款資訊驗證中<br>請稍候...⏳</h1>")
     booking_controller.pay();
-});
+};
