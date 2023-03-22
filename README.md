@@ -9,14 +9,14 @@ Taipei-day-trip is an e-commerce travel website that allows users to search and 
 
 Table of Contents
 ---
+- [ taipei-day-trip](#-taipei-day-trip)
+  - [Table of Contents](#table-of-contents)
   - [Main Features](#main-features)
   - [Technologies](#technologies)
     - [Backend](#backend)
     - [Frontend](#frontend)
   - [Architecture](#architecture)
   - [Database Schema](#database-schema)
-
-
 
 Main Features
 ---
@@ -67,7 +67,7 @@ Architecture
   - When a client sends a request, Nginx first handles static resources, and then forwards the remaining requests to uWSGI for processing.
 - Other AWS Services
   - ElastiCache Redis: store tokens and related data for member registration, improving performance.
-  - RDS MySQL: ustore all data required by the application.
+  - RDS MySQL: store all data required by the application.
   - S3: store member avatar images and accelerated read speeds through CloudFront CDN.
   - CloudFront: utilizes its global node CDN service to provide fast file loading speeds, improving user experience.
 ![image](readme_pic/Architecture.png)
