@@ -23,10 +23,10 @@ Main Features
 - Member system: registration with 📧email verification, login, logout, account information modification, and profile picture upload.
 
 ![image](readme_pic/user.gif)
-- Search function: users can search for tourist attractions by keywords or categories.
+- Search function: search for tourist attractions by keywords or categories.
 - Infinite scroll/lazy loading.
-- Shopping cart: users can add their favorite attractions to the cart and make a payment using the [TapPay](https://github.com/TapPay) payment gateway.
-- Order history: users can view their order history.
+- Shopping cart: add favorite attractions to the cart and make a payment using the [TapPay](https://github.com/TapPay) payment gateway.
+- Order history.
 
 ![image](readme_pic/order.gif)
 
@@ -66,9 +66,9 @@ Architecture
   - uWSGI communicates with Nginx via socket using the uwsgi protocol and calls the Flask app using the wsgi protocol.
   - When a client sends a request, Nginx first handles static resources, and then forwards the remaining requests to uWSGI for processing.
 - Other AWS Services
-  - ElastiCache Redis: used to store tokens and related data for member registration, improving performance.
-  - RDS MySQL: used to store all data required by the application.
-  - S3: used to store member avatar images and accelerated read speeds through CloudFront CDN.
+  - ElastiCache Redis: store tokens and related data for member registration, improving performance.
+  - RDS MySQL: ustore all data required by the application.
+  - S3: store member avatar images and accelerated read speeds through CloudFront CDN.
   - CloudFront: utilizes its global node CDN service to provide fast file loading speeds, improving user experience.
 ![image](readme_pic/Architecture.png)
 
