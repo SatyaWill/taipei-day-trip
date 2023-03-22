@@ -20,7 +20,10 @@ def delete_pic(url):
     if url.count('/') < 2:
         return
     file_key = url.split('/')[-2] + '/' + url.split('/')[-1]
-    s3.delete_object(Bucket=BUCKET, Key=file_key)
+    res = s3.delete_object(Bucket=BUCKET, Key=file_key)
+    return res['ResponseMetadata']['HTTPStatusCode'] == 200
+
+    
     
 
     

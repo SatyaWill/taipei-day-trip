@@ -2,7 +2,6 @@ from setting import config
 
 # for app.py ==> config.from_object(setting)
 setting = config.setting
-dev = config.dev
 
 DB_HOST = config.setting.DB_HOST
 DB_DB = config.setting.DB_DB

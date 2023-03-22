@@ -25,13 +25,6 @@ class setting:
     REDIS_HOST = os.getenv('REDIS_HOST')
     VERIFICATION_URL = os.getenv('VERIFICATION_URL')
     
-class dev(setting):
-    DEVELOPMENT = True
-    DEBUG = True
-    DB_HOST = os.getenv('DB_HOST1')
-    DB_USER = os.getenv('DB_USER1')
-    DB_PW = os.getenv('DB_PW1')
-    REDIS_HOST = os.getenv('REDIS_HOST1')
-    VERIFICATION_URL = os.getenv('VERIFICATION_URL1')
+
 
 

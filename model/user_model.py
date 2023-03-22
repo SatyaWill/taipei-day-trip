@@ -43,19 +43,22 @@ class UserModel:
     
     @staticmethod
     def member_pic(user_email, member_pic):
+        url = "" if member_pic == "default" else "https://d3r92fcxan8msh.cloudfront.net/trip/" + member_pic 
         try:
             with pool.get_connection() as db:
-                if member_pic == "":
-                    sql = 'SELECT member_pic FROM users WHERE email=%s'
-                    r = selectone(db, sql, (user_email,))
+                cursor = db.cursor(dictionary=True)                
+                cursor.execute('SELECT member_pic FROM users WHERE email=%s', (user_email,))
+                r = cursor.fetchone()
+                cursor.execute('UPDATE users SET member_pic=%s WHERE email=%s',(url, user_email))            
+                if r['member_pic']:
                     delete_pic(r['member_pic'])
-                    return edit_db('UPDATE users SET member_pic="" WHERE email=%s',(user_email, ))
-                else:
-                    url = "https://d3r92fcxan8msh.cloudfront.net/trip/" + member_pic
-                    sql = 'UPDATE users SET member_pic=%s WHERE email=%s'
-                    return edit_db(db, sql, (url, user_email))
+                db.commit()
+                return cursor.rowcount
         except Exception as e:
+            if "db" in dir():
+                db.rollback()
             logger.error("err_member_pic(%s):%s", user_email, e)
+            raise
             
     @staticmethod
     def edit_name(user_email, name):

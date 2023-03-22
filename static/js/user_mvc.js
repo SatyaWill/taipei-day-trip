@@ -98,7 +98,7 @@ let view = {
         el("nav_booking").className = "item";
         el_qr(".member_name").textContent = data.name;
         el_qrs("#member_pic, #dl_member_pic, #nav_member_pic").forEach(i => {
-            i.onerror = ()=> {i.onerror = null, i.src = this.default_url} // 避免錯誤時不斷觸發
+            i.onerror = () => {i.src = this.default_url; return true}; // 避免錯誤時不斷觸發
             i.src = data.member_pic || this.default_url;
         });
 
@@ -223,7 +223,7 @@ let contorller = {
                 e.stopPropagation()
                 el('dl_member_pic').src = view.default_url
                 el("save_btn").disabled = false
-                view.canvas_url = ''
+                view.canvas_url = 'default'
             }
             el("chg_btn").onclick = ()=>{ 
                 el('member_pic_input').click();
@@ -231,8 +231,8 @@ let contorller = {
             }
             el('save_btn').addEventListener("click", async e=>{
                 e.preventDefault();
-                if (view.canvas_url === '') {
-                  await model.member_pic("");
+                if (view.canvas_url === 'default') {
+                  await model.member_pic("default");
                 } else {
                   await model.pic_name();
                   await model.to_s3(model.pic_url, view.canvas_url);
