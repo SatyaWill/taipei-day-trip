@@ -62,6 +62,14 @@ Technologies
 
 Architecture
 ---
+- The backend uses the Python Flask framework, coupled with the uWSGI middleware, and is deployed on AWS EC2 using Docker.
+  - uWSGI communicates with Nginx via socket using the uwsgi protocol and calls the Flask app using the wsgi protocol.
+  - When a client sends a request, Nginx first handles static resources, and then forwards the remaining requests to uWSGI for processing.
+- Other AWS Services
+  - ElastiCache Redis: used to store tokens and related data for member registration, improving performance.
+  - RDS MySQL: used to store all data required by the application.
+  - S3: used to store member avatar images and accelerated read speeds through CloudFront CDN.
+  - CloudFront: utilizes its global node CDN service to provide fast file loading speeds, improving user experience.
 ![image](readme_pic/Architecture.png)
 
 Database Schema
