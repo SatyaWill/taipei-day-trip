@@ -9,8 +9,6 @@ Taipei-day-trip is an e-commerce travel website that allows users to search and 
 
 Table of Contents
 ---
-- [ taipei-day-trip](#-taipei-day-trip)
-  - [Table of Contents](#table-of-contents)
   - [Main Features](#main-features)
   - [Technologies](#technologies)
     - [Backend](#backend)
