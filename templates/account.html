@@ -1,0 +1,80 @@
+{% extends 'index.html' %}
+{% block title %}
+<title>帳號設定</title>
+<link rel="stylesheet" type="text/css" href="/static/css/account.css"/>
+{% endblock %}
+{% block content %}
+<main>
+    <p class="headline"></p>
+    <div id="account_data" class="hidden">
+        <section>
+            <h3>帳 號 資 訊</h3>
+            <div class="account_item_box">
+            <h4>信箱：</h4>
+                <input class="account_input" id="account_email" readonly>
+            </div>
+            <div class="account_item_box">
+                <h4>姓名：</h4>
+                <div class="end_label_box">
+                    <input class="account_input" id="account_name" readonly>
+                    <span class="account_edit" id="edit_name_icon" title="點我修改">📝</span>
+                </div>
+            </div>
+            <div class="account_item_box">
+            <h4>手機：</h4>
+                <div class="end_label_box">
+                    <input class="account_input" id="account_phone" readonly>
+                    <span class="account_edit" id="edit_phone_icon" title="點我修改">📝</span>
+                </div>
+            </div>
+            <!-- 修改資料dialog -->
+            <dialog id="edit_name_dialog" class="sign_dialog">
+                <h2>修改姓名</h2>
+                <form method="dialog" id="edit_name_form">
+                    <div class="close"></div>
+                    <input type="text" name="name" class="sign" id="new_name" 
+                    placeholder="請輸入新名字" data-valid="false" required>
+                    <p class="hidden" id="edit_name_hint"></p>
+                    <button class="dialog_btn" id="edit_name_btn" disabled>修 改</button>
+                </form>
+            </dialog>
+            <dialog id="edit_phone_dialog" class="sign_dialog">
+                <h2>修改手機號碼</h2>
+                <form method="dialog" id="edit_phone_form">
+                    <div class="close"></div>
+                    <input type="tel" name="phone" class="sign" id="new_phone" 
+                    data-valid="false" maxlength="10" placeholder="輸入手機號碼" required>
+                    <p class="hidden" id="edit_phone_hint"></p>
+                    <button class="dialog_btn" id="edit_phone_btn" disabled>修 改</button>
+                </form>
+            </dialog>
+        </section>
+        <section>
+                <h3 class="password_title">修 改 密 碼</h3>
+                <div class="account_item_box">
+                    <h4>舊密碼：</h4>
+                    <div class="end_label_box">
+                        <input  type="password" name="password" class="account_input" 
+                        id="old_password" data-valid="false"
+                        placeholder="英數6字以上" required>
+                        <span class="account_eyes" id="account_eyes" title="密碼切換">🕶</span>
+                    </div>
+                </div>
+                <div class="account_item_box">
+                    <h4>新密碼：</h4>
+                    <div class="end_label_box">
+                        <input  type="password" name="password" class="account_input" 
+                        id="new_password"  data-valid="false"
+                        placeholder="英數6字以上" required>
+                        <span class="account_eyes">🕶</span>
+                    </div>
+                </div>
+                <p class="hidden" id="edit_password_hint"></p>
+                <button class="dialog_btn" id="edit_password_btn" disabled>修 改</button>
+        </section>
+    </div>
+</main>
+{% endblock %}
+{% block script %}
+<script src="/static/js/account.js"></script>
+{% endblock %}

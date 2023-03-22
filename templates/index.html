@@ -9,67 +9,135 @@
     {% endblock %}
     <link rel="icon" type="image/png" href="/static/pic/101.ico"/>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/croppie.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 <body>
     <div id="page-container">
         <nav>
             <div class="frame">
-                <div class="left" onclick="location.href='/'">台北一日遊</div>
+                <div class="left" onclick="location.href='/'" hint="點我回首頁">台北一日遊</div>
                 <div class="right">
-                    <div class="item" id="nav_booking">預定行程</div>
+                    <div class="hidden" id="nav_booking" hint="購物車"><img class="nav_pic" src="/static/pic/car.png"></div>
                     <div class="item" id="nav_signin_up">登入/註冊</div>
-                    <div class="hidden" id="nav_signout">登出系統</div>
+                    <div class="hidden" id="nav_member" hint="會員">
+                        <img class="nav_pic" id="nav_member_pic" src="/static/pic/user.png">
+                        <div class="member_pic_inset"></div>
+                    </div>
+                        <dialog id="member_dialog">
+                            <form method="dialog" id="member_form">
+                                <div class="member_picbox">                           
+                                    <img id="member_pic" src="/static/pic/user.png">
+                                    <div class="member_pic_inset"></div>
+                                    <div id="chg_pic_btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+                                            <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
+                                            <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="member_name"></div>
+                                <button class="member_item" id="nav_account">帳號設定</button>
+                                <button class="member_item" id="nav_history">歷史訂單</button>
+                                <button class="dialog_btn" id="nav_signout">登出系統</button>
+                            </form>
+                        </dialog>
                 </div>
             </div>
             <div>
+                <!--- 換大頭貼 =======================-->
+                <dialog id="pic_dialog" class="sign_dialog">
+                    <h2>變更會員圖像</h2>
+                    <form method="dialog" id="pic_form" method="POST">
+                        <div class="close"></div>
+                        <!--email-->
+                        <div id="dl_member_picbox">             
+                            <img id="dl_member_pic" src="/static/pic/user.png">
+                        </div>
+                        <input type="file" name="member_pic_input" id="member_pic_input" style="display:none;" accept="image/*">
+                        <div class="cr-slider-wrap">
+                            <input type="range" class="cr-slider" min="1" max="1.5" step="0.01" value="1">
+                        </div>
+                        <div class="btnflex">
+                            <div class="dialog_btn" id="chg_btn">變更
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                            </div>
+                            <button class="dialog_btn" id="rm_btn" disabled>移除
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                  </svg>
+                            </button>
+                            <button class="dialog_btn" id="save_btn" disabled>儲存
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                                    <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </dialog>
+                <!--- 登入 =======================-->
                 <dialog id="signin_dialog" class="sign_dialog">
                     <h2>登入會員帳號</h2>
                     <form method="dialog" id="signin_form" method="POST">
                         <div class="close"></div>
                         <!--email-->
                         <input type="email" name="email" class="sign" id="signin_email" autocomplete="username" 
-                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
-                        <p class="hidden" id="signin_email_hint"></p>
+                        data-valid="false" placeholder="輸入電子信箱" required>
+                        <p class="hint_el hidden" id="signin_email_hint"></p>
                         <!--pw-->
-                        <input type="password" name="password" class="sign" id="signin_password" autocomplete="current-password" 
-                            pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$"
-                            oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
-                            placeholder="輸入密碼(英、數組合6字以上)" required>
-                        <p class="hidden" id="signin_password_hint"></p>
-                        <button class="dialog_btn" >登入帳戶</button>
+                        <div class="end_labeled">
+                            <input type="password" name="password" class="sign" 
+                                id="signin_password" autocomplete="current-password" 
+                                data-valid="false"
+                                placeholder="輸入密碼(英、數組合6字以上)" required>
+                            <span class="see_password" id="signin_eyes" title="密碼切換">🕶</span>
+                        </div>
+                        <p class="hint_el hidden" id="signin_password_hint"></p>
+                        <button class="dialog_btn" id="signin_btn" disabled>登入帳戶</button>
                     </form>
-                    <p class="hidden" id="signin_info"></p>
+                    <p class="hint_el hidden" id="signin_info"></p>
                     <span id="to_signup">還沒有帳戶？點此註冊</span>
                 </dialog>
+                <!--- 註冊 ===========================-->
                 <dialog id="signup_dialog" class="sign_dialog">
                     <h2>註冊會員帳號</h2>
                     <form method="dialog" id="signup_form" method="POST">
                         <div class="close"></div>
                         <!--name-->
-                        <input type="text" name="name" class="sign" id="signup_name" placeholder="輸入姓名" required>
+                        <input type="text" name="name" class="sign" id="signup_name" placeholder="輸入姓名" data-valid="false" required>
+                        <p class="hint_el hidden" id="signup_name_hint"></p>
                         <!--email-->
-                        <div class="end_labeled">
-                            <input type="email" name="email" class="sign" id="signup_email" autocomplete="username" 
-                                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$" placeholder="輸入電子信箱" required>
-                            <span class="hidden" id="check_email"></span>
-                        </div class= "end_labeled">
-                        <p class="hidden" id="signup_email_hint"></p>
+                        <input type="email" name="email" class="sign" id="signup_email" autocomplete="username" 
+                        data-valid="false" placeholder="輸入電子信箱" required>
+                        <p class="hint_el hidden" id="signup_email_hint"></p>
+                        <!--phone-->
+                        <input type="tel" name="phone" class="sign" id="signup_phone" data-valid="false" 
+                        maxlength="10" placeholder="輸入手機號碼" required>
+                        <p class="hint_el hidden" id="signup_phone_hint"></p>
                         <!--pw-->
                         <div class="end_labeled">
                             <input type="password" name="password" class="sign" id="signup_password" 
-                                autocomplete="new-password" pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$" 
-                                oninvalid="setCustomValidity('需為英、數組合，且至少6字以上');" 
-                                placeholder="輸入密碼(英、數組合6字以上)" required>
-                            <span class="hidden" id="check_password"></span>
+                                 data-valid="false" placeholder="輸入密碼(英、數組合6字以上)" required>
+                            <span class="see_password" id="signup_eyes" title="密碼切換">🕶</span>
                         </div>
-                        <p class="hidden" id="signup_password_hint"></p>
-                        <button class="dialog_btn">註冊新帳戶</button>
+                        <p class="hint_el hidden" id="signup_password_hint"></p>
+                        <button class="dialog_btn" id="signup_btn" disabled>註冊新帳戶</button>
                     </form>
-                    <p class="hidden" id="signup_info"></p>
+                    <p class="hint_el hidden" id="signup_info"></p>
                     <span id="to_signin">已經有帳戶了？點此登入</span>
                 </dialog>
-                <dialog id="signin_out_ok"></dialog>
+                <!---登入/登出成功 / 其他提示訊息 ===========================-->
+                <dialog id="hint_dialog"></dialog>
+                <!---登入/登出成功 / 其他提示訊息 ===========================-->
+                <dialog id="hint_close_dialog" class="sign_dialog">
+                    <div class="close"></div>
+                    <div id="hint_close_dialog_content"><div>
+                </dialog>
         </nav>
+        <div id="go_top" class="hidden">▲</div>
         {% block content %}
         <main>
             <div class="welcome">
@@ -77,8 +145,8 @@
                     <h1>輕鬆享受台北一日悠閒</h1>
                     <h4>探索每個角落，體驗城市的深度旅遊行程</h4>
                     <span class="searchbox">
-                        <input type="search" id="search" name="keyword" placeholder="輸入景點名稱查詢" autofocus>
-                        <div id="search_icon" onclick="search_att()"></div>
+                        <input type="search" id="search" name="keyword" placeholder="輸入「景點關鍵字」或「景點類別」查詢" autofocus>
+                        <div id="search_icon"></div>
                         <dialog id="search_dialog">
                             <form method="dialog" id="search_form">
                             </form>
@@ -91,7 +159,7 @@
         {% endblock %}
     </div>
         <footer>
-            <p>COPYRIGHT © 2021 台北一日遊</p>
+            <p>COPYRIGHT © 2023 台北一日遊</p>
         </footer>
         <script src="/static/js/user_mvc.js"></script>
         {% block script %}

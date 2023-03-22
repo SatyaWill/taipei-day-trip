@@ -57,13 +57,30 @@ function show_pic(n){
 }
 
 
-// 日期預設/最小值為當天、選取區間 1 個月 ==============================================
+// 日期預設/最小值為當天、選取區間 2 個月 ==============================================
+// const tomorrow = new Date(today.setDate(today.getDate()+1)).toLocaleDateString('en-ca');
+// const max_day = new Date(today.setDate(today.getDate()+60)).toLocaleDateString('en-ca') ;
+// edge在此會失靈，改用以下方式
 let today = new Date();
-const tomorrow = new Date(today.setDate(today.getDate()+1));
-const max_day = new Date(today.setMonth(today.getMonth()+1)).toLocaleDateString('en-ca') ;
-el("date").valueAsDate = tomorrow;
-el("date").min = tomorrow.toLocaleDateString('en-ca');
-el("date").max = max_day;
+let tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+let max_day = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000);
+el("date").value = formatDate(tomorrow);
+el("date").min = formatDate(tomorrow);
+el("date").max = formatDate(max_day);
+el("date").addEventListener("blur", function() {
+  if (this.value < formatDate(tomorrow)) 
+    return this.value = formatDate(tomorrow);
+  if (this.value > formatDate(max_day))
+    return this.value = formatDate(max_day);
+});
+
+function formatDate(date) {
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, "0");
+  let day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 
 // 上/下午不同導覽費用 ==============================================
 el("morning").onclick = ()=>{el("price").value = 2000};
@@ -87,5 +104,6 @@ async function booking(){
         }
     });
     if(res.status===200) return location.href = "/booking";
+    if(res.status===400) return alert("日期錯誤");
     el("signin_dialog").showModal();
 }; 

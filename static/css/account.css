@@ -1,0 +1,168 @@
+#account_data{
+    width: 1000px;
+    margin: 0 auto;
+    padding-top: 30px;
+    padding-bottom: 35px;
+    text-align: left;
+    font-size: 16px;
+    color: #666666;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+section{
+    box-sizing: border-box;
+    width: 400px;
+    padding: 20px 20px 13px;
+    margin: 20px auto;
+    text-align: center;
+    position: relative;
+    background: #edebeb;
+    border-radius: 15px;
+    box-shadow: 0px 15px 10px -16px rgb(130, 128, 128);
+    -webkit-box-reflect: below 0 -webkit-linear-gradient(transparent 92%,rgba(0,0,0,.2));
+}
+
+h3{
+    font-weight: 700;
+    margin-bottom: 10px;
+    height: auto;
+}
+
+.password_title{
+    margin-bottom: 15px;
+}
+
+.account_input{
+    box-sizing: border-box;
+    width: 200px;
+    height: 38px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 10px;
+    padding: 10px;
+    margin-left: 2px;
+    margin-bottom: 15px;
+    box-shadow: inset 1px 1px 1px  rgb(184, 179, 179);
+}
+
+.account_item_box{
+    width: 266px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.account_item_box h4{
+    height: 38px;
+    line-height: 38px;
+    flex: none;
+}
+
+.end_label_box{
+    flex: none;
+    box-sizing: border-box;
+    width: 200px;
+    height: 38px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
+    position: relative;
+    border: 0;
+}
+
+.end_label_box input{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.account_edit{
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    font-size: 20px;
+    line-height: 10px;
+    filter: drop-shadow(1px 1px 1px #e2e769);
+}
+
+.account_eyes{
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    font-size: 24px;
+    filter: drop-shadow(1px 1px 1px #e2e769);
+    line-height: 10px;
+}
+
+.open_account_eyes{
+    right: 5px;
+    bottom: 15px;
+    filter: drop-shadow(1x 1px 1px #e2e769);
+}
+
+.account_edit:hover, .open_account_eyes:hover, .account_eyes:hover{
+    filter: drop-shadow(1px 1px 1px #998e44);
+}
+
+#edit_password_hint{ 
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 0 10px 5px;
+}
+
+#edit_password_btn{
+    width: 90px;
+    border-radius: 8px;
+    box-shadow: 2x 2px 2px #e2e769;
+}
+
+#edit_password_btn:hover{
+    box-shadow: 2x 2px 2px #998e44;
+}
+
+@media (max-width:1200px) {
+    #account_data{
+        width: 90%;
+    }
+}
+
+@media (max-width:500px) {
+    #account_data{
+        padding: 20px 1px;
+    }
+    section{
+        width: 100%;
+        padding: 20px 10px;
+    }
+}
+
+
+@media (max-width:300px) {
+    section{
+        width: 100%;
+        padding: 20px 0px;
+    }
+    .account_input{
+        width: 175px;
+    }
+    .account_input[name="password"]{
+        width: 165px;
+    }
+    .account_item_box{
+        width: 225px;
+    }
+    .end_label_box{
+        width: 180px;
+    }
+
+    .account_eyes{
+        right: 20px;
+    }
+    .open_account_eyes{
+        right: 15px;
+    }
+}

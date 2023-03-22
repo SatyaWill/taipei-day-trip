@@ -9,7 +9,7 @@
 }
 
 #booking_data{
-    width: 980px;
+    width: 1000px;
     margin: 30px auto 0;
     padding-bottom: 40px;
     text-align: left;
@@ -45,7 +45,7 @@ hr{
     margin: 0px auto;
 }
 
-#booking_pic{
+.booking_pic{
     flex: none;
     position: relative;
     width: 250px;
@@ -59,9 +59,13 @@ hr{
     height: 100%;
     object-fit: cover;
     left: 0px;
+    border-radius: 10px;
+    box-shadow: 2px 5px 5px -5px rgb(0, 0, 0);
+    -webkit-box-reflect: below 0 -webkit-linear-gradient(transparent 90%,rgba(0,0,0,.3));
 }
 
-#booking_info{
+.booking_info{
+    padding-top: 11px;
     flex: auto;
     position: relative;
     text-align: left;
@@ -82,6 +86,7 @@ h4{
     height: 14px;
     color: #666666;
 }
+
 .title{
     font-weight: 700;
     margin-bottom: 20px;
@@ -117,7 +122,9 @@ h4{
     border: 1px solid #E8E8E8;
     border-radius: 5px;
     padding: 10px;
+    margin-left: 2px;
     margin-bottom: 15px;
+    box-shadow: inset 0.5px 0.5px 0.5px  rgb(213, 207, 207);
 }
 
 .input_box{
@@ -126,6 +133,7 @@ h4{
 }
 
 .input_box span{
+    font-size: 24px;
     padding-left: 5px;
 }
 
@@ -151,6 +159,19 @@ h4{
     border-radius: 5px;
     position: absolute;
     right: 0;
+    box-shadow: 2px 5px 5px -5px rgb(0, 0, 0);
+}
+
+.order_info{
+    padding-top: 5px;
+    flex: auto;
+    position: relative;
+    text-align: left;
+}
+
+.to_history{
+    cursor: pointer;
+    color:#448899;
 }
 
 @media (max-width:1200px) {
@@ -182,7 +203,8 @@ h4{
     #booking_title{
         width: auto;
     }
-    #booking_pic, #booking_info{
+    .booking_pic, .booking_info{
+        padding-top: 0;
         box-sizing: border-box;
         width: 100%;
         margin: 0 auto 30px;
