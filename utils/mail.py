@@ -4,7 +4,7 @@ import ssl, smtplib
 
 def send_verification_email(name, receiver, token):
     em = EmailMessage()
-    em["From"] = MAIL
+    em["From"] = "台北一日遊<service@xinyu.site>"
     em["To"] = receiver
     em["Subject"] = "台北一日遊註冊驗證信"
     verification_url = VERIFICATION_URL + '?token=' + token
