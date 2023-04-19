@@ -212,8 +212,8 @@ let contorller = {
         await model.get_user_info();
         if(model.user_info){
             view.show_btn(model.user_info);
-            el("nav_booking").onclick = ()=>location.href = "/booking";
-            el("nav_member").onclick = () => el("member_dialog").toggleAttribute("open");
+            el("nav_booking").onclick = ()=> location.href = "/booking";
+            el("nav_member").onclick = ()=> el("member_dialog").toggleAttribute("open");
             el("nav_account").onclick = ()=> location.href = "/account";
             el("nav_history").onclick = ()=> location.href = "/history";
 
