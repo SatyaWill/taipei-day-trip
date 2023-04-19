@@ -18,17 +18,17 @@ Table of Contents
 
 Main Features
 ---
-- Member system: registration with 📧email verification, login, logout, account information modification, and profile picture upload.
+- Member system: registration with 📧email verification, login, logout, account information modification, and profile picture upload
 
 ![image](readme_pic/user.gif)
-- Search function: search for tourist attractions by keywords or categories.
-- Infinite scroll/lazy loading.
-- Shopping cart: add favorite attractions to the cart and make a payment using the [TapPay](https://github.com/TapPay) payment gateway.
-- Order history.
+- Search function: search for tourist attractions by keywords or categories
+- Infinite scroll/lazy loading
+- Shopping cart: add favorite attractions to the cart and make a payment using the [TapPay](https://github.com/TapPay) payment gateway
+- Order history
 
 ![image](readme_pic/order.gif)
 
-- Responsive web design.
+- Responsive web design
 
 Technologies
 ---
@@ -51,8 +51,8 @@ Technologies
   - S3
   - CloudFront
 - TapPay SDK
-- MVC architecture.
-- Database indexing for faster query performance.
+- MVC architecture
+- Database indexing for faster query performance
 ### Frontend
 - HTML
 - CSS
